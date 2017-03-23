@@ -43,7 +43,8 @@ public class LoginBean {
                     .setParameter("usuario", funcionario.getUsuario())
                     .getSingleResult();
             JpaUtil.closeManager(manager);
-            if (funcionarioBuscado != null &&
+            return "Home?faces-redirect=true";
+/*            if (funcionarioBuscado != null &&
                     funcionarioBuscado.getSenha().equals(funcionario.getSenha())) {
                 funcionario = funcionarioBuscado;
                 autenticador.setLogado(true);
@@ -53,7 +54,7 @@ public class LoginBean {
                         .addMessage(null, new FacesMessage("Par login/senha inválido!"));
                 funcionario = new Funcionario();
                 return null;
-            }
+            }*/
     }
 
     public void limpar(){

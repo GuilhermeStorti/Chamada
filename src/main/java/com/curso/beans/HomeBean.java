@@ -1,4 +1,3 @@
-/*
 package com.curso.beans;
 
 import com.curso.entidades.Graficos;
@@ -16,11 +15,6 @@ import javax.persistence.EntityManager;
 import javax.persistence.Query;
 import java.util.ArrayList;
 import java.util.List;
-
-*/
-/**
- * Created by guilherme on 22/11/16.
- *//*
 
 @ViewScoped
 @ManagedBean(name = "homeBean")
@@ -87,4 +81,3 @@ public class HomeBean {
     }
 
 }
-*/
