@@ -1,0 +1,18 @@
+<ui:composition template="../../WEB-INF/template/LayoutPadrao.xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui">
+
+    <ui:define name="titulo"><h1>Em Branco</h1></ui:define>
+
+    <ui:define name="corpo" >
+        <h:panelGrid columns="2" columnClasses="columA">
+            <h:outputLabel value="Nome: " for="ipNome"/>
+            <h:inputText id="ipNome" />
+            <h:outputLabel value="Cpf: " for="ipCpf"/>
+            <h:inputText id="ipCpf" />
+
+        </h:panelGrid>
+    </ui:define>
+</ui:composition>
