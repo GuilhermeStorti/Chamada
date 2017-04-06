@@ -19,6 +19,7 @@ import javax.servlet.http.HttpSession;
 @SessionScoped
 public class LoginBean {
 
+
     @PostConstruct
     private void init(){
         this.autenticador = new Autenticador();
