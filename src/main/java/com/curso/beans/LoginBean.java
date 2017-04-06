@@ -1,20 +1,15 @@
 package com.curso.beans;
 
 import com.curso.entidades.Autenticador;
-import com.curso.entidades.Funcionario;
+import com.curso.entidades.Usuario;
 import com.curso.utils.JpaUtil;
 
 import javax.annotation.PostConstruct;
-import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
-import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import javax.persistence.EntityManager;
 import javax.servlet.http.HttpSession;
-import java.io.IOException;
-import java.util.List;
-import java.util.Map;
 
 /**
  *
@@ -27,40 +22,26 @@ public class LoginBean {
     @PostConstruct
     private void init(){
         this.autenticador = new Autenticador();
-    }
-
-    public LoginBean() {
-        this.funcionario = new Funcionario();
+        usuario = new Usuario();
     }
     
-    private Funcionario funcionario;
+    private Usuario usuario;
     private Autenticador autenticador;
 
     public String entrar() {
             EntityManager manager = JpaUtil.getManager();
 
-            Funcionario funcionarioBuscado = manager.createNamedQuery("Funcionario.findByUsuario", Funcionario.class)
-                    .setParameter("usuario", funcionario.getUsuario())
+            Usuario usuarioBuscado = manager.createNamedQuery("Usuario.findByLogin", Usuario.class)
+                    .setParameter("login", usuario.getLogin())
                     .getSingleResult();
             JpaUtil.closeManager(manager);
             return "Home?faces-redirect=true";
-/*            if (funcionarioBuscado != null &&
-                    funcionarioBuscado.getSenha().equals(funcionario.getSenha())) {
-                funcionario = funcionarioBuscado;
-                autenticador.setLogado(true);
-                return "Home?faces-redirect=true";
-            } else {
-                FacesContext.getCurrentInstance()
-                        .addMessage(null, new FacesMessage("Par login/senha inválido!"));
-                funcionario = new Funcionario();
-                return null;
-            }*/
     }
 
     public void limpar(){
         System.out.println("teste");
-        funcionario.setUsuario("");
-        funcionario.setSenha("");
+        usuario.setLogin("");
+        usuario.setSenha("");
     }
 
     public String logout() {
@@ -82,13 +63,11 @@ public class LoginBean {
         this.autenticador = autenticador;
     }
 
-    public Funcionario getFuncionario() {
-        return funcionario;
+    public Usuario getUsuario() {
+        return usuario;
     }
 
-    public void setFuncionario(Funcionario funcionario) {
-        this.funcionario = funcionario;
+    public void setUsuario(Usuario usuario) {
+        this.usuario = usuario;
     }
-    
-    
 }

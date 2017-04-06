@@ -1,9 +1,7 @@
 package com.curso.utils;
 
 import com.curso.beans.LoginBean;
-import com.curso.entidades.Funcionario;
-
-import java.io.IOException;
+import com.curso.entidades.Usuario;
 
 import javax.faces.application.NavigationHandler;
 import javax.faces.context.ExternalContext;
@@ -30,13 +28,13 @@ public class PhaseListener implements javax.faces.event.PhaseListener {
             return;
         }
         
-        LoginBean usuarioBean = (LoginBean) externalContext.getSessionMap().get("loginBean");
-        Funcionario usuarioLogado = null;
+        LoginBean loginBean = (LoginBean) externalContext.getSessionMap().get("loginBean");
+        Usuario usuarioLogado = null;
         
-        if (usuarioBean != null) {
-            usuarioLogado = usuarioBean.getFuncionario();
+        if (loginBean != null) {
+            usuarioLogado = loginBean.getUsuario();
         }
-        if (usuarioLogado == null || !usuarioBean.getAutenticador().isLogado()) {            
+        if (usuarioLogado == null || !loginBean.getAutenticador().isLogado()) {
            handler.handleNavigation(facesContext, null, "forbidden");
            facesContext.renderResponse();
         }

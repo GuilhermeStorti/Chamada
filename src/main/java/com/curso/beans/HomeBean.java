@@ -1,25 +1,13 @@
 package com.curso.beans;
 
-import com.curso.entidades.Graficos;
-import com.curso.utils.JpaUtil;
-import org.primefaces.model.chart.Axis;
-import org.primefaces.model.chart.AxisType;
-import org.primefaces.model.chart.CategoryAxis;
-import org.primefaces.model.chart.LineChartModel;
-import org.primefaces.model.chart.LineChartSeries;
-
-import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
-import javax.persistence.EntityManager;
-import javax.persistence.Query;
-import java.util.ArrayList;
-import java.util.List;
 
 @ViewScoped
 @ManagedBean(name = "homeBean")
 public class HomeBean {
 
+/*
     private LineChartModel areaModel;
     private Graficos graficoCategoria;
     private List<Graficos> listCategoria;
@@ -79,5 +67,6 @@ public class HomeBean {
         yAxis.setMin(0);
         yAxis.setMax(10);
     }
+*/
 
 }

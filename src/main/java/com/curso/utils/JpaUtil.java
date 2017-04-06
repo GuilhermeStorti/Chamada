@@ -30,7 +30,7 @@ public class JpaUtil {
 
     private static EntityManagerFactory getEmf() {
         if(emf == null){
-            emf = Persistence.createEntityManagerFactory("locacao");
+            emf = Persistence.createEntityManagerFactory("projetointer");
         }
         return emf;
     }
