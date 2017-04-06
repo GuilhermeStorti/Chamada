@@ -12,6 +12,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
@@ -22,7 +24,7 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @author guilherme
  */
 @Entity
-@Table(name = "Materia")
+@Table(name = "materia")
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "Materia.findAll", query = "SELECT m FROM Materia m")
@@ -39,6 +41,9 @@ public class Materia implements Serializable {
     @Basic(optional = false)
     @Column(name = "nome")
     private String nome;
+    @JoinColumn(name = "id_professor", referencedColumnName = "id")
+    @ManyToOne(optional = false)
+    private Professor idProfessor;
 
     public Materia() {
     }
@@ -66,6 +71,14 @@ public class Materia implements Serializable {
 
     public void setNome(String nome) {
         this.nome = nome;
+    }
+
+    public Professor getIdProfessor() {
+        return idProfessor;
+    }
+
+    public void setIdProfessor(Professor idProfessor) {
+        this.idProfessor = idProfessor;
     }
 
     @Override

@@ -12,6 +12,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
@@ -22,14 +24,12 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @author guilherme
  */
 @Entity
-@Table(name = "Curso")
+@Table(name = "curso")
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "Curso.findAll", query = "SELECT c FROM Curso c")
     , @NamedQuery(name = "Curso.findById", query = "SELECT c FROM Curso c WHERE c.id = :id")
-    , @NamedQuery(name = "Curso.findByNome", query = "SELECT c FROM Curso c WHERE c.nome = :nome")
-    , @NamedQuery(name = "Curso.findByIdTurma", query = "SELECT c FROM Curso c WHERE c.idTurma = :idTurma")
-    , @NamedQuery(name = "Curso.findByIdMateria", query = "SELECT c FROM Curso c WHERE c.idMateria = :idMateria")})
+    , @NamedQuery(name = "Curso.findByNome", query = "SELECT c FROM Curso c WHERE c.nome = :nome")})
 public class Curso implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -41,12 +41,12 @@ public class Curso implements Serializable {
     @Basic(optional = false)
     @Column(name = "nome")
     private int nome;
-    @Basic(optional = false)
-    @Column(name = "id_turma")
-    private int idTurma;
-    @Basic(optional = false)
-    @Column(name = "id_materia")
-    private int idMateria;
+    @JoinColumn(name = "id_instituicao", referencedColumnName = "id")
+    @ManyToOne(optional = false)
+    private Instituicao idInstituicao;
+    @JoinColumn(name = "id_turma", referencedColumnName = "id")
+    @ManyToOne(optional = false)
+    private Turma idTurma;
 
     public Curso() {
     }
@@ -55,11 +55,9 @@ public class Curso implements Serializable {
         this.id = id;
     }
 
-    public Curso(Integer id, int nome, int idTurma, int idMateria) {
+    public Curso(Integer id, int nome) {
         this.id = id;
         this.nome = nome;
-        this.idTurma = idTurma;
-        this.idMateria = idMateria;
     }
 
     public Integer getId() {
@@ -78,20 +76,20 @@ public class Curso implements Serializable {
         this.nome = nome;
     }
 
-    public int getIdTurma() {
+    public Instituicao getIdInstituicao() {
+        return idInstituicao;
+    }
+
+    public void setIdInstituicao(Instituicao idInstituicao) {
+        this.idInstituicao = idInstituicao;
+    }
+
+    public Turma getIdTurma() {
         return idTurma;
     }
 
-    public void setIdTurma(int idTurma) {
+    public void setIdTurma(Turma idTurma) {
         this.idTurma = idTurma;
-    }
-
-    public int getIdMateria() {
-        return idMateria;
-    }
-
-    public void setIdMateria(int idMateria) {
-        this.idMateria = idMateria;
     }
 
     @Override

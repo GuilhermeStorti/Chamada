@@ -5,8 +5,11 @@
  */
 package com.curso.entidades;
 
+import com.unitri.domain.Usuario;
 import java.io.Serializable;
+import java.util.List;
 import javax.persistence.Basic;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -14,15 +17,17 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
  * @author guilherme
  */
 @Entity
-@Table(name = "Perfil")
+@Table(name = "perfil")
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "Perfil.findAll", query = "SELECT p FROM Perfil p")
@@ -39,6 +44,8 @@ public class Perfil implements Serializable {
     @Basic(optional = false)
     @Column(name = "categoria")
     private String categoria;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idPerfil")
+    private List<Usuario> usuarioList;
 
     public Perfil() {
     }
@@ -66,6 +73,15 @@ public class Perfil implements Serializable {
 
     public void setCategoria(String categoria) {
         this.categoria = categoria;
+    }
+
+    @XmlTransient
+    public List<Usuario> getUsuarioList() {
+        return usuarioList;
+    }
+
+    public void setUsuarioList(List<Usuario> usuarioList) {
+        this.usuarioList = usuarioList;
     }
 
     @Override

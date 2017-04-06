@@ -6,7 +6,9 @@
 package com.curso.entidades;
 
 import java.io.Serializable;
+import java.util.List;
 import javax.persistence.Basic;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -14,15 +16,17 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
  * @author guilherme
  */
 @Entity
-@Table(name = "Turma")
+@Table(name = "turma")
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "Turma.findAll", query = "SELECT t FROM Turma t")
@@ -39,6 +43,8 @@ public class Turma implements Serializable {
     @Basic(optional = false)
     @Column(name = "turma")
     private String turma;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idTurma")
+    private List<Curso> cursoList;
 
     public Turma() {
     }
@@ -66,6 +72,15 @@ public class Turma implements Serializable {
 
     public void setTurma(String turma) {
         this.turma = turma;
+    }
+
+    @XmlTransient
+    public List<Curso> getCursoList() {
+        return cursoList;
+    }
+
+    public void setCursoList(List<Curso> cursoList) {
+        this.cursoList = cursoList;
     }
 
     @Override
