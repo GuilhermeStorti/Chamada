@@ -1,7 +1,8 @@
 
 package com.curso.beans;
 
-import com.curso.entidades.Usuario;
+
+import com.curso.entity.Usuario;
 
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
@@ -10,14 +11,16 @@ import javax.faces.bean.SessionScoped;
 @SessionScoped
 public class UsuarioBean {
 
+    public UsuarioBean(Usuario usuario) {
+        this.usuario = usuario;
+    }
+
+    public UsuarioBean() {
+    }
+
     private String nome;
     private Boolean autenticado = false;
     private Usuario usuario;
-
-    public Boolean autenticar(String nome, String senha) {
-        this.nome = nome;
-        return autenticado = (nome != null && senha != null);
-    }
 
     public Boolean isAutenticado() {
         return autenticado;

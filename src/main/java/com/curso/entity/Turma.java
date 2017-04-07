@@ -3,10 +3,12 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.curso.entidades;
+package com.curso.entity;
 
 import java.io.Serializable;
+import java.util.List;
 import javax.persistence.Basic;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -14,22 +16,23 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
  * @author guilherme
  */
 @Entity
-@Table(name = "curso_materia")
+@Table(name = "turma")
 @XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "CursoMateria.findAll", query = "SELECT c FROM CursoMateria c")
-    , @NamedQuery(name = "CursoMateria.findById", query = "SELECT c FROM CursoMateria c WHERE c.id = :id")
-    , @NamedQuery(name = "CursoMateria.findByIdCurso", query = "SELECT c FROM CursoMateria c WHERE c.idCurso = :idCurso")
-    , @NamedQuery(name = "CursoMateria.findByIdMateria", query = "SELECT c FROM CursoMateria c WHERE c.idMateria = :idMateria")})
-public class CursoMateria implements Serializable {
+    @NamedQuery(name = "Turma.findAll", query = "SELECT t FROM Turma t")
+    , @NamedQuery(name = "Turma.findById", query = "SELECT t FROM Turma t WHERE t.id = :id")
+    , @NamedQuery(name = "Turma.findByTurma", query = "SELECT t FROM Turma t WHERE t.turma = :turma")})
+public class Turma implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
@@ -38,23 +41,21 @@ public class CursoMateria implements Serializable {
     @Column(name = "id")
     private Integer id;
     @Basic(optional = false)
-    @Column(name = "id_curso")
-    private int idCurso;
-    @Basic(optional = false)
-    @Column(name = "id_materia")
-    private int idMateria;
+    @Column(name = "turma")
+    private String turma;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idTurma")
+    private List<Curso> cursoList;
 
-    public CursoMateria() {
+    public Turma() {
     }
 
-    public CursoMateria(Integer id) {
+    public Turma(Integer id) {
         this.id = id;
     }
 
-    public CursoMateria(Integer id, int idCurso, int idMateria) {
+    public Turma(Integer id, String turma) {
         this.id = id;
-        this.idCurso = idCurso;
-        this.idMateria = idMateria;
+        this.turma = turma;
     }
 
     public Integer getId() {
@@ -65,20 +66,21 @@ public class CursoMateria implements Serializable {
         this.id = id;
     }
 
-    public int getIdCurso() {
-        return idCurso;
+    public String getTurma() {
+        return turma;
     }
 
-    public void setIdCurso(int idCurso) {
-        this.idCurso = idCurso;
+    public void setTurma(String turma) {
+        this.turma = turma;
     }
 
-    public int getIdMateria() {
-        return idMateria;
+    @XmlTransient
+    public List<Curso> getCursoList() {
+        return cursoList;
     }
 
-    public void setIdMateria(int idMateria) {
-        this.idMateria = idMateria;
+    public void setCursoList(List<Curso> cursoList) {
+        this.cursoList = cursoList;
     }
 
     @Override
@@ -91,10 +93,10 @@ public class CursoMateria implements Serializable {
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof CursoMateria)) {
+        if (!(object instanceof Turma)) {
             return false;
         }
-        CursoMateria other = (CursoMateria) object;
+        Turma other = (Turma) object;
         if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
             return false;
         }
@@ -103,7 +105,7 @@ public class CursoMateria implements Serializable {
 
     @Override
     public String toString() {
-        return "com.curso.entidades.CursoMateria[ id=" + id + " ]";
+        return "com.curso.entity.Turma[ id=" + id + " ]";
     }
     
 }

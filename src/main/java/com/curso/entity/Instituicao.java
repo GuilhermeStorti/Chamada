@@ -3,10 +3,8 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.curso.entidades;
+package com.curso.entity;
 
-import com.unitri.domain.Endereco;
-import com.unitri.domain.Usuario;
 import java.io.Serializable;
 import java.util.List;
 import javax.persistence.Basic;
@@ -30,14 +28,14 @@ import javax.xml.bind.annotation.XmlTransient;
  * @author guilherme
  */
 @Entity
-@Table(name = "professor")
+@Table(name = "instituicao")
 @XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "Professor.findAll", query = "SELECT p FROM Professor p")
-    , @NamedQuery(name = "Professor.findById", query = "SELECT p FROM Professor p WHERE p.id = :id")
-    , @NamedQuery(name = "Professor.findByNome", query = "SELECT p FROM Professor p WHERE p.nome = :nome")
-    , @NamedQuery(name = "Professor.findByCpf", query = "SELECT p FROM Professor p WHERE p.cpf = :cpf")})
-public class Professor implements Serializable {
+    @NamedQuery(name = "Instituicao.findAll", query = "SELECT i FROM Instituicao i")
+    , @NamedQuery(name = "Instituicao.findById", query = "SELECT i FROM Instituicao i WHERE i.id = :id")
+    , @NamedQuery(name = "Instituicao.findByRazaoSocial", query = "SELECT i FROM Instituicao i WHERE i.razaoSocial = :razaoSocial")
+    , @NamedQuery(name = "Instituicao.findByNomeFantasia", query = "SELECT i FROM Instituicao i WHERE i.nomeFantasia = :nomeFantasia")})
+public class Instituicao implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
@@ -46,34 +44,31 @@ public class Professor implements Serializable {
     @Column(name = "id")
     private Integer id;
     @Basic(optional = false)
-    @Column(name = "nome")
-    private String nome;
+    @Column(name = "razao_social")
+    private String razaoSocial;
     @Basic(optional = false)
-    @Column(name = "cpf")
-    private String cpf;
+    @Column(name = "nome_fantasia")
+    private String nomeFantasia;
     @JoinColumn(name = "id_contato", referencedColumnName = "id")
     @ManyToOne(optional = false)
     private Contato idContato;
     @JoinColumn(name = "id_endereco", referencedColumnName = "id")
     @ManyToOne(optional = false)
     private Endereco idEndereco;
-    @JoinColumn(name = "id_usuario", referencedColumnName = "id")
-    @ManyToOne(optional = false)
-    private Usuario idUsuario;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idProfessor")
-    private List<Materia> materiaList;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idInstituicao")
+    private List<Curso> cursoList;
 
-    public Professor() {
+    public Instituicao() {
     }
 
-    public Professor(Integer id) {
+    public Instituicao(Integer id) {
         this.id = id;
     }
 
-    public Professor(Integer id, String nome, String cpf) {
+    public Instituicao(Integer id, String razaoSocial, String nomeFantasia) {
         this.id = id;
-        this.nome = nome;
-        this.cpf = cpf;
+        this.razaoSocial = razaoSocial;
+        this.nomeFantasia = nomeFantasia;
     }
 
     public Integer getId() {
@@ -84,20 +79,20 @@ public class Professor implements Serializable {
         this.id = id;
     }
 
-    public String getNome() {
-        return nome;
+    public String getRazaoSocial() {
+        return razaoSocial;
     }
 
-    public void setNome(String nome) {
-        this.nome = nome;
+    public void setRazaoSocial(String razaoSocial) {
+        this.razaoSocial = razaoSocial;
     }
 
-    public String getCpf() {
-        return cpf;
+    public String getNomeFantasia() {
+        return nomeFantasia;
     }
 
-    public void setCpf(String cpf) {
-        this.cpf = cpf;
+    public void setNomeFantasia(String nomeFantasia) {
+        this.nomeFantasia = nomeFantasia;
     }
 
     public Contato getIdContato() {
@@ -116,21 +111,13 @@ public class Professor implements Serializable {
         this.idEndereco = idEndereco;
     }
 
-    public Usuario getIdUsuario() {
-        return idUsuario;
-    }
-
-    public void setIdUsuario(Usuario idUsuario) {
-        this.idUsuario = idUsuario;
-    }
-
     @XmlTransient
-    public List<Materia> getMateriaList() {
-        return materiaList;
+    public List<Curso> getCursoList() {
+        return cursoList;
     }
 
-    public void setMateriaList(List<Materia> materiaList) {
-        this.materiaList = materiaList;
+    public void setCursoList(List<Curso> cursoList) {
+        this.cursoList = cursoList;
     }
 
     @Override
@@ -143,10 +130,10 @@ public class Professor implements Serializable {
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof Professor)) {
+        if (!(object instanceof Instituicao)) {
             return false;
         }
-        Professor other = (Professor) object;
+        Instituicao other = (Instituicao) object;
         if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
             return false;
         }
@@ -155,7 +142,7 @@ public class Professor implements Serializable {
 
     @Override
     public String toString() {
-        return "com.curso.entidades.Professor[ id=" + id + " ]";
+        return "com.curso.entity.Instituicao[ id=" + id + " ]";
     }
     
 }

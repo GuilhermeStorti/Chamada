@@ -1,6 +1,6 @@
 package com.curso.beans.Aluno;
 
-import com.curso.entidades.Aluno;
+import com.curso.entity.Aluno;
 
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;

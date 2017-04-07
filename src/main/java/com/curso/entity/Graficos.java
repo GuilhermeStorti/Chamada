@@ -1,4 +1,4 @@
-package com.curso.entidades;
+package com.curso.entity;
 
 /**
  * Created by guilherme on 22/11/16.

@@ -3,34 +3,36 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.curso.entidades;
+package com.curso.entity;
 
 import java.io.Serializable;
+import java.util.List;
 import javax.persistence.Basic;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
  * @author guilherme
  */
 @Entity
-@Table(name = "curso")
+@Table(name = "perfil")
 @XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "Curso.findAll", query = "SELECT c FROM Curso c")
-    , @NamedQuery(name = "Curso.findById", query = "SELECT c FROM Curso c WHERE c.id = :id")
-    , @NamedQuery(name = "Curso.findByNome", query = "SELECT c FROM Curso c WHERE c.nome = :nome")})
-public class Curso implements Serializable {
+    @NamedQuery(name = "Perfil.findAll", query = "SELECT p FROM Perfil p")
+    , @NamedQuery(name = "Perfil.findById", query = "SELECT p FROM Perfil p WHERE p.id = :id")
+    , @NamedQuery(name = "Perfil.findByCategoria", query = "SELECT p FROM Perfil p WHERE p.categoria = :categoria")})
+public class Perfil implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
@@ -39,25 +41,21 @@ public class Curso implements Serializable {
     @Column(name = "id")
     private Integer id;
     @Basic(optional = false)
-    @Column(name = "nome")
-    private int nome;
-    @JoinColumn(name = "id_instituicao", referencedColumnName = "id")
-    @ManyToOne(optional = false)
-    private Instituicao idInstituicao;
-    @JoinColumn(name = "id_turma", referencedColumnName = "id")
-    @ManyToOne(optional = false)
-    private Turma idTurma;
+    @Column(name = "categoria")
+    private String categoria;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idPerfil")
+    private List<Usuario> usuarioList;
 
-    public Curso() {
+    public Perfil() {
     }
 
-    public Curso(Integer id) {
+    public Perfil(Integer id) {
         this.id = id;
     }
 
-    public Curso(Integer id, int nome) {
+    public Perfil(Integer id, String categoria) {
         this.id = id;
-        this.nome = nome;
+        this.categoria = categoria;
     }
 
     public Integer getId() {
@@ -68,28 +66,21 @@ public class Curso implements Serializable {
         this.id = id;
     }
 
-    public int getNome() {
-        return nome;
+    public String getCategoria() {
+        return categoria;
     }
 
-    public void setNome(int nome) {
-        this.nome = nome;
+    public void setCategoria(String categoria) {
+        this.categoria = categoria;
     }
 
-    public Instituicao getIdInstituicao() {
-        return idInstituicao;
+    @XmlTransient
+    public List<Usuario> getUsuarioList() {
+        return usuarioList;
     }
 
-    public void setIdInstituicao(Instituicao idInstituicao) {
-        this.idInstituicao = idInstituicao;
-    }
-
-    public Turma getIdTurma() {
-        return idTurma;
-    }
-
-    public void setIdTurma(Turma idTurma) {
-        this.idTurma = idTurma;
+    public void setUsuarioList(List<Usuario> usuarioList) {
+        this.usuarioList = usuarioList;
     }
 
     @Override
@@ -102,10 +93,10 @@ public class Curso implements Serializable {
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof Curso)) {
+        if (!(object instanceof Perfil)) {
             return false;
         }
-        Curso other = (Curso) object;
+        Perfil other = (Perfil) object;
         if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
             return false;
         }
@@ -114,7 +105,7 @@ public class Curso implements Serializable {
 
     @Override
     public String toString() {
-        return "com.curso.entidades.Curso[ id=" + id + " ]";
+        return "com.curso.entity.Perfil[ id=" + id + " ]";
     }
     
 }

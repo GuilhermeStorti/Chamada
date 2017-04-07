@@ -32,10 +32,11 @@
 		<span class="logo-lg login-logo" ><b>Unitri Chamada</b></span>
 	</div>
 	<div id="login-dialog" class="login-dialog">
+		<div style="text-align: center; width: 600px; left: 50%; margin-left: -285px; height: auto; position: relative" >
+			<p:messages id="messages" showDetail="true" autoUpdate="true" closable="true"/>
+		</div>
 		<h:form id="frm" styleClass="login-form" >
 			<h1>Login</h1>
-
-			<p:messages id="messages" showDetail="true" autoUpdate="true" closable="true" style="width: 100%"/>
 
 			<h:panelGrid columns="2" style="text-align: center;">
 				<p:outputLabel value="Usuario: " for="login"/>
@@ -45,7 +46,7 @@
 				<p:column/>
 				<p:column>
 					<p:commandButton value="Limpar" action="#{loginBean.limpar()}" update="frm" tabindex="3" icon="fa fa-fw fa-eraser"/>
-					<p:commandButton value="Entrar" style="margin-left: 46px;" action="#{loginBean.entrar()}" ajax="false" tabindex="4" icon="fa fa-fw fa-sign-in"/>
+					<p:commandButton value="Entrar" style="margin-left: 46px;" action="#{loginBean.login()}" ajax="false" tabindex="4" icon="fa fa-fw fa-sign-in"/>
 				</p:column>
 			</h:panelGrid>
 		</h:form>

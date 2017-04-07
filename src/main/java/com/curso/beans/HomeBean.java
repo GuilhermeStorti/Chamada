@@ -7,7 +7,10 @@ import javax.faces.bean.ViewScoped;
 @ManagedBean(name = "homeBean")
 public class HomeBean {
 
-/*
+    public HomeBean() {
+    }
+
+    /*
     private LineChartModel areaModel;
     private Graficos graficoCategoria;
     private List<Graficos> listCategoria;

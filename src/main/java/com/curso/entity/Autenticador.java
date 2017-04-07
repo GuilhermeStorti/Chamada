@@ -1,26 +1,26 @@
-package com.curso.entidades;
+package com.curso.entity;
 
 /**
  * Created by guilherme on 21/11/16.
  */
 public class Autenticador {
 
-    private String usuario;
+    private Usuario usuario;
     private boolean logado;
 
     public Autenticador() {
     }
 
-    public Autenticador(String usuario, boolean logado) {
+    public Autenticador(Usuario usuario, boolean logado) {
         this.usuario = usuario;
         this.logado = logado;
     }
 
-    public String getUsuario() {
+    public Usuario getUsuario() {
         return usuario;
     }
 
-    public void setUsuario(String usuario) {
+    public void setUsuario(Usuario usuario) {
         this.usuario = usuario;
     }
 

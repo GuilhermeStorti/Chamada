@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.curso.entidades;
+package com.curso.entity;
 
 import java.io.Serializable;
 import javax.persistence.Basic;
@@ -12,6 +12,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
@@ -22,14 +24,13 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @author guilherme
  */
 @Entity
-@Table(name = "Usuario")
+@Table(name = "materia")
 @XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "Usuario.findAll", query = "SELECT u FROM Usuario u")
-    , @NamedQuery(name = "Usuario.findById", query = "SELECT u FROM Usuario u WHERE u.id = :id")
-    , @NamedQuery(name = "Usuario.findByLogin", query = "SELECT u FROM Usuario u WHERE u.login = :login")
-    , @NamedQuery(name = "Usuario.findBySenha", query = "SELECT u FROM Usuario u WHERE u.senha = :senha")})
-public class Usuario implements Serializable {
+    @NamedQuery(name = "Materia.findAll", query = "SELECT m FROM Materia m")
+    , @NamedQuery(name = "Materia.findById", query = "SELECT m FROM Materia m WHERE m.id = :id")
+    , @NamedQuery(name = "Materia.findByNome", query = "SELECT m FROM Materia m WHERE m.nome = :nome")})
+public class Materia implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
@@ -38,23 +39,22 @@ public class Usuario implements Serializable {
     @Column(name = "id")
     private Integer id;
     @Basic(optional = false)
-    @Column(name = "login")
-    private String login;
-    @Basic(optional = false)
-    @Column(name = "senha")
-    private String senha;
+    @Column(name = "nome")
+    private String nome;
+    @JoinColumn(name = "id_professor", referencedColumnName = "id")
+    @ManyToOne(optional = false)
+    private Professor idProfessor;
 
-    public Usuario() {
+    public Materia() {
     }
 
-    public Usuario(Integer id) {
+    public Materia(Integer id) {
         this.id = id;
     }
 
-    public Usuario(Integer id, String login, String senha) {
+    public Materia(Integer id, String nome) {
         this.id = id;
-        this.login = login;
-        this.senha = senha;
+        this.nome = nome;
     }
 
     public Integer getId() {
@@ -65,20 +65,20 @@ public class Usuario implements Serializable {
         this.id = id;
     }
 
-    public String getLogin() {
-        return login;
+    public String getNome() {
+        return nome;
     }
 
-    public void setLogin(String login) {
-        this.login = login;
+    public void setNome(String nome) {
+        this.nome = nome;
     }
 
-    public String getSenha() {
-        return senha;
+    public Professor getIdProfessor() {
+        return idProfessor;
     }
 
-    public void setSenha(String senha) {
-        this.senha = senha;
+    public void setIdProfessor(Professor idProfessor) {
+        this.idProfessor = idProfessor;
     }
 
     @Override
@@ -91,10 +91,10 @@ public class Usuario implements Serializable {
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof Usuario)) {
+        if (!(object instanceof Materia)) {
             return false;
         }
-        Usuario other = (Usuario) object;
+        Materia other = (Materia) object;
         if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
             return false;
         }
@@ -103,7 +103,7 @@ public class Usuario implements Serializable {
 
     @Override
     public String toString() {
-        return "com.curso.entidades.Usuario[ id=" + id + " ]";
+        return "com.curso.entity.Materia[ id=" + id + " ]";
     }
     
 }

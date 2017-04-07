@@ -3,10 +3,8 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.curso.entidades;
+package com.curso.entity;
 
-import com.unitri.domain.Endereco;
-import com.unitri.domain.Usuario;
 import java.io.Serializable;
 import javax.persistence.Basic;
 import javax.persistence.Column;
@@ -26,14 +24,13 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @author guilherme
  */
 @Entity
-@Table(name = "aluno")
+@Table(name = "curso")
 @XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "Aluno.findAll", query = "SELECT a FROM Aluno a")
-    , @NamedQuery(name = "Aluno.findById", query = "SELECT a FROM Aluno a WHERE a.id = :id")
-    , @NamedQuery(name = "Aluno.findByNome", query = "SELECT a FROM Aluno a WHERE a.nome = :nome")
-    , @NamedQuery(name = "Aluno.findByCpf", query = "SELECT a FROM Aluno a WHERE a.cpf = :cpf")})
-public class Aluno implements Serializable {
+    @NamedQuery(name = "Curso.findAll", query = "SELECT c FROM Curso c")
+    , @NamedQuery(name = "Curso.findById", query = "SELECT c FROM Curso c WHERE c.id = :id")
+    , @NamedQuery(name = "Curso.findByNome", query = "SELECT c FROM Curso c WHERE c.nome = :nome")})
+public class Curso implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
@@ -43,31 +40,24 @@ public class Aluno implements Serializable {
     private Integer id;
     @Basic(optional = false)
     @Column(name = "nome")
-    private String nome;
-    @Basic(optional = false)
-    @Column(name = "cpf")
-    private String cpf;
-    @JoinColumn(name = "id_contato", referencedColumnName = "id")
+    private int nome;
+    @JoinColumn(name = "id_instituicao", referencedColumnName = "id")
     @ManyToOne(optional = false)
-    private Contato idContato;
-    @JoinColumn(name = "id_endereco", referencedColumnName = "id")
+    private Instituicao idInstituicao;
+    @JoinColumn(name = "id_turma", referencedColumnName = "id")
     @ManyToOne(optional = false)
-    private Endereco idEndereco;
-    @JoinColumn(name = "id_usuario", referencedColumnName = "id")
-    @ManyToOne(optional = false)
-    private Usuario idUsuario;
+    private Turma idTurma;
 
-    public Aluno() {
+    public Curso() {
     }
 
-    public Aluno(Integer id) {
+    public Curso(Integer id) {
         this.id = id;
     }
 
-    public Aluno(Integer id, String nome, String cpf) {
+    public Curso(Integer id, int nome) {
         this.id = id;
         this.nome = nome;
-        this.cpf = cpf;
     }
 
     public Integer getId() {
@@ -78,44 +68,28 @@ public class Aluno implements Serializable {
         this.id = id;
     }
 
-    public String getNome() {
+    public int getNome() {
         return nome;
     }
 
-    public void setNome(String nome) {
+    public void setNome(int nome) {
         this.nome = nome;
     }
 
-    public String getCpf() {
-        return cpf;
+    public Instituicao getIdInstituicao() {
+        return idInstituicao;
     }
 
-    public void setCpf(String cpf) {
-        this.cpf = cpf;
+    public void setIdInstituicao(Instituicao idInstituicao) {
+        this.idInstituicao = idInstituicao;
     }
 
-    public Contato getIdContato() {
-        return idContato;
+    public Turma getIdTurma() {
+        return idTurma;
     }
 
-    public void setIdContato(Contato idContato) {
-        this.idContato = idContato;
-    }
-
-    public Endereco getIdEndereco() {
-        return idEndereco;
-    }
-
-    public void setIdEndereco(Endereco idEndereco) {
-        this.idEndereco = idEndereco;
-    }
-
-    public Usuario getIdUsuario() {
-        return idUsuario;
-    }
-
-    public void setIdUsuario(Usuario idUsuario) {
-        this.idUsuario = idUsuario;
+    public void setIdTurma(Turma idTurma) {
+        this.idTurma = idTurma;
     }
 
     @Override
@@ -128,10 +102,10 @@ public class Aluno implements Serializable {
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof Aluno)) {
+        if (!(object instanceof Curso)) {
             return false;
         }
-        Aluno other = (Aluno) object;
+        Curso other = (Curso) object;
         if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
             return false;
         }
@@ -140,7 +114,7 @@ public class Aluno implements Serializable {
 
     @Override
     public String toString() {
-        return "com.curso.entidades.Aluno[ id=" + id + " ]";
+        return "com.curso.entity.Curso[ id=" + id + " ]";
     }
     
 }

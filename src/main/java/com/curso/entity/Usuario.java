@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.curso.entidades;
+package com.curso.entity;
 
 import java.io.Serializable;
 import java.util.List;
@@ -14,6 +14,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
@@ -26,15 +28,14 @@ import javax.xml.bind.annotation.XmlTransient;
  * @author guilherme
  */
 @Entity
-@Table(name = "contato")
+@Table(name = "usuario")
 @XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "Contato.findAll", query = "SELECT c FROM Contato c")
-    , @NamedQuery(name = "Contato.findById", query = "SELECT c FROM Contato c WHERE c.id = :id")
-    , @NamedQuery(name = "Contato.findByEmail", query = "SELECT c FROM Contato c WHERE c.email = :email")
-    , @NamedQuery(name = "Contato.findByFixo", query = "SELECT c FROM Contato c WHERE c.fixo = :fixo")
-    , @NamedQuery(name = "Contato.findByCelular", query = "SELECT c FROM Contato c WHERE c.celular = :celular")})
-public class Contato implements Serializable {
+    @NamedQuery(name = "Usuario.findAll", query = "SELECT u FROM Usuario u")
+    , @NamedQuery(name = "Usuario.findById", query = "SELECT u FROM Usuario u WHERE u.id = :id")
+    , @NamedQuery(name = "Usuario.findByLogin", query = "SELECT u FROM Usuario u WHERE u.login = :login")
+    , @NamedQuery(name = "Usuario.findBySenha", query = "SELECT u FROM Usuario u WHERE u.senha = :senha")})
+public class Usuario implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
@@ -43,33 +44,30 @@ public class Contato implements Serializable {
     @Column(name = "id")
     private Integer id;
     @Basic(optional = false)
-    @Column(name = "email")
-    private String email;
+    @Column(name = "login")
+    private String login;
     @Basic(optional = false)
-    @Column(name = "fixo")
-    private String fixo;
-    @Basic(optional = false)
-    @Column(name = "celular")
-    private String celular;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idContato")
+    @Column(name = "senha")
+    private String senha;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idUsuario")
     private List<Aluno> alunoList;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idContato")
-    private List<Instituicao> instituicaoList;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idContato")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idUsuario")
     private List<Professor> professorList;
+    @JoinColumn(name = "id_perfil", referencedColumnName = "id")
+    @ManyToOne(optional = false)
+    private Perfil idPerfil;
 
-    public Contato() {
+    public Usuario() {
     }
 
-    public Contato(Integer id) {
+    public Usuario(Integer id) {
         this.id = id;
     }
 
-    public Contato(Integer id, String email, String fixo, String celular) {
+    public Usuario(Integer id, String login, String senha) {
         this.id = id;
-        this.email = email;
-        this.fixo = fixo;
-        this.celular = celular;
+        this.login = login;
+        this.senha = senha;
     }
 
     public Integer getId() {
@@ -80,28 +78,20 @@ public class Contato implements Serializable {
         this.id = id;
     }
 
-    public String getEmail() {
-        return email;
+    public String getLogin() {
+        return login;
     }
 
-    public void setEmail(String email) {
-        this.email = email;
+    public void setLogin(String login) {
+        this.login = login;
     }
 
-    public String getFixo() {
-        return fixo;
+    public String getSenha() {
+        return senha;
     }
 
-    public void setFixo(String fixo) {
-        this.fixo = fixo;
-    }
-
-    public String getCelular() {
-        return celular;
-    }
-
-    public void setCelular(String celular) {
-        this.celular = celular;
+    public void setSenha(String senha) {
+        this.senha = senha;
     }
 
     @XmlTransient
@@ -114,21 +104,20 @@ public class Contato implements Serializable {
     }
 
     @XmlTransient
-    public List<Instituicao> getInstituicaoList() {
-        return instituicaoList;
-    }
-
-    public void setInstituicaoList(List<Instituicao> instituicaoList) {
-        this.instituicaoList = instituicaoList;
-    }
-
-    @XmlTransient
     public List<Professor> getProfessorList() {
         return professorList;
     }
 
     public void setProfessorList(List<Professor> professorList) {
         this.professorList = professorList;
+    }
+
+    public Perfil getIdPerfil() {
+        return idPerfil;
+    }
+
+    public void setIdPerfil(Perfil idPerfil) {
+        this.idPerfil = idPerfil;
     }
 
     @Override
@@ -141,10 +130,10 @@ public class Contato implements Serializable {
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof Contato)) {
+        if (!(object instanceof Usuario)) {
             return false;
         }
-        Contato other = (Contato) object;
+        Usuario other = (Usuario) object;
         if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
             return false;
         }
@@ -153,7 +142,7 @@ public class Contato implements Serializable {
 
     @Override
     public String toString() {
-        return "com.curso.entidades.Contato[ id=" + id + " ]";
+        return "com.curso.entity.Usuario[ id=" + id + " ]";
     }
     
 }

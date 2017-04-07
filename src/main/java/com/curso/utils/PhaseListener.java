@@ -1,7 +1,7 @@
 package com.curso.utils;
 
 import com.curso.beans.LoginBean;
-import com.curso.entidades.Usuario;
+import com.curso.entity.Usuario;
 
 import javax.faces.application.NavigationHandler;
 import javax.faces.context.ExternalContext;

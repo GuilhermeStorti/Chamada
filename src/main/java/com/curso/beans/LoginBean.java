@@ -1,12 +1,14 @@
 package com.curso.beans;
 
-import com.curso.entidades.Autenticador;
-import com.curso.entidades.Usuario;
+import com.curso.entity.Autenticador;
+import com.curso.entity.Usuario;
 import com.curso.utils.JpaUtil;
 
 import javax.annotation.PostConstruct;
+import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
+import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import javax.persistence.EntityManager;
 import javax.servlet.http.HttpSession;
@@ -25,18 +27,43 @@ public class LoginBean {
         this.autenticador = new Autenticador();
         usuario = new Usuario();
     }
-    
+
     private Usuario usuario;
     private Autenticador autenticador;
+    private UsuarioBean usuarioBean;
 
-    public String entrar() {
+    public String login() {
+
+        try {
             EntityManager manager = JpaUtil.getManager();
 
-            Usuario usuarioBuscado = manager.createNamedQuery("Usuario.findByLogin", Usuario.class)
-                    .setParameter("login", usuario.getLogin())
-                    .getSingleResult();
+            Usuario usuarioBuscado = null;
+            try{
+                usuarioBuscado= manager.createNamedQuery("Usuario.findByLogin", Usuario.class)
+                        .setParameter("login", usuario.getLogin())
+                        .getSingleResult();
+            }catch (Exception e){
+
+            }
             JpaUtil.closeManager(manager);
-            return "Home?faces-redirect=true";
+            if (usuarioBuscado != null &&
+                    usuarioBuscado.getSenha().equals(usuario.getSenha())) {
+                usuario = usuarioBuscado;
+                autenticador.setLogado(true);
+                autenticador.setUsuario(usuarioBuscado);
+                return "Home?faces-redirect=true";
+            } else {
+                FacesContext.getCurrentInstance()
+                        .addMessage(null, new FacesMessage(
+                                FacesMessage.SEVERITY_WARN, null, "Login ou senha inválido!"));
+                usuario = new Usuario();
+                return null;
+            }
+        } catch (Exception e){
+            FacesContext.getCurrentInstance()
+                    .addMessage("Erro", new FacesMessage(FacesMessage.SEVERITY_ERROR, "Erro", e.getMessage()));
+        }
+        return null;
     }
 
     public void limpar(){

@@ -3,10 +3,12 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.curso.entidades;
+package com.curso.entity;
 
 import java.io.Serializable;
+import java.util.List;
 import javax.persistence.Basic;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -14,15 +16,17 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
  * @author guilherme
  */
 @Entity
-@Table(name = "Endereco")
+@Table(name = "endereco")
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "Endereco.findAll", query = "SELECT e FROM Endereco e")
@@ -59,6 +63,12 @@ public class Endereco implements Serializable {
     @Basic(optional = false)
     @Column(name = "cidade")
     private String cidade;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idEndereco")
+    private List<Aluno> alunoList;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idEndereco")
+    private List<Instituicao> instituicaoList;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idEndereco")
+    private List<Professor> professorList;
 
     public Endereco() {
     }
@@ -133,6 +143,33 @@ public class Endereco implements Serializable {
         this.cidade = cidade;
     }
 
+    @XmlTransient
+    public List<Aluno> getAlunoList() {
+        return alunoList;
+    }
+
+    public void setAlunoList(List<Aluno> alunoList) {
+        this.alunoList = alunoList;
+    }
+
+    @XmlTransient
+    public List<Instituicao> getInstituicaoList() {
+        return instituicaoList;
+    }
+
+    public void setInstituicaoList(List<Instituicao> instituicaoList) {
+        this.instituicaoList = instituicaoList;
+    }
+
+    @XmlTransient
+    public List<Professor> getProfessorList() {
+        return professorList;
+    }
+
+    public void setProfessorList(List<Professor> professorList) {
+        this.professorList = professorList;
+    }
+
     @Override
     public int hashCode() {
         int hash = 0;
@@ -155,7 +192,7 @@ public class Endereco implements Serializable {
 
     @Override
     public String toString() {
-        return "com.curso.entidades.Endereco[ id=" + id + " ]";
+        return "com.curso.entity.Endereco[ id=" + id + " ]";
     }
     
 }

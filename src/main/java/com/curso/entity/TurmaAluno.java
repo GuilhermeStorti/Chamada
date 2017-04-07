@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.curso.entidades;
+package com.curso.entity;
 
 import java.io.Serializable;
 import javax.persistence.Basic;
@@ -12,8 +12,6 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
@@ -24,13 +22,14 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @author guilherme
  */
 @Entity
-@Table(name = "materia")
+@Table(name = "turma_aluno")
 @XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "Materia.findAll", query = "SELECT m FROM Materia m")
-    , @NamedQuery(name = "Materia.findById", query = "SELECT m FROM Materia m WHERE m.id = :id")
-    , @NamedQuery(name = "Materia.findByNome", query = "SELECT m FROM Materia m WHERE m.nome = :nome")})
-public class Materia implements Serializable {
+    @NamedQuery(name = "TurmaAluno.findAll", query = "SELECT t FROM TurmaAluno t")
+    , @NamedQuery(name = "TurmaAluno.findById", query = "SELECT t FROM TurmaAluno t WHERE t.id = :id")
+    , @NamedQuery(name = "TurmaAluno.findByIdTurma", query = "SELECT t FROM TurmaAluno t WHERE t.idTurma = :idTurma")
+    , @NamedQuery(name = "TurmaAluno.findByIdAluno", query = "SELECT t FROM TurmaAluno t WHERE t.idAluno = :idAluno")})
+public class TurmaAluno implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
@@ -39,22 +38,23 @@ public class Materia implements Serializable {
     @Column(name = "id")
     private Integer id;
     @Basic(optional = false)
-    @Column(name = "nome")
-    private String nome;
-    @JoinColumn(name = "id_professor", referencedColumnName = "id")
-    @ManyToOne(optional = false)
-    private Professor idProfessor;
+    @Column(name = "id_turma")
+    private int idTurma;
+    @Basic(optional = false)
+    @Column(name = "id_aluno")
+    private int idAluno;
 
-    public Materia() {
+    public TurmaAluno() {
     }
 
-    public Materia(Integer id) {
+    public TurmaAluno(Integer id) {
         this.id = id;
     }
 
-    public Materia(Integer id, String nome) {
+    public TurmaAluno(Integer id, int idTurma, int idAluno) {
         this.id = id;
-        this.nome = nome;
+        this.idTurma = idTurma;
+        this.idAluno = idAluno;
     }
 
     public Integer getId() {
@@ -65,20 +65,20 @@ public class Materia implements Serializable {
         this.id = id;
     }
 
-    public String getNome() {
-        return nome;
+    public int getIdTurma() {
+        return idTurma;
     }
 
-    public void setNome(String nome) {
-        this.nome = nome;
+    public void setIdTurma(int idTurma) {
+        this.idTurma = idTurma;
     }
 
-    public Professor getIdProfessor() {
-        return idProfessor;
+    public int getIdAluno() {
+        return idAluno;
     }
 
-    public void setIdProfessor(Professor idProfessor) {
-        this.idProfessor = idProfessor;
+    public void setIdAluno(int idAluno) {
+        this.idAluno = idAluno;
     }
 
     @Override
@@ -91,10 +91,10 @@ public class Materia implements Serializable {
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof Materia)) {
+        if (!(object instanceof TurmaAluno)) {
             return false;
         }
-        Materia other = (Materia) object;
+        TurmaAluno other = (TurmaAluno) object;
         if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
             return false;
         }
@@ -103,7 +103,7 @@ public class Materia implements Serializable {
 
     @Override
     public String toString() {
-        return "com.curso.entidades.Materia[ id=" + id + " ]";
+        return "com.curso.entity.TurmaAluno[ id=" + id + " ]";
     }
     
 }

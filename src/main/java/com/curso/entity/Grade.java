@@ -3,12 +3,10 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.curso.entidades;
+package com.curso.entity;
 
 import java.io.Serializable;
-import java.util.List;
 import javax.persistence.Basic;
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -16,23 +14,21 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.xml.bind.annotation.XmlRootElement;
-import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
  * @author guilherme
  */
 @Entity
-@Table(name = "turma")
+@Table(name = "grade")
 @XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "Turma.findAll", query = "SELECT t FROM Turma t")
-    , @NamedQuery(name = "Turma.findById", query = "SELECT t FROM Turma t WHERE t.id = :id")
-    , @NamedQuery(name = "Turma.findByTurma", query = "SELECT t FROM Turma t WHERE t.turma = :turma")})
-public class Turma implements Serializable {
+    @NamedQuery(name = "Grade.findAll", query = "SELECT g FROM Grade g")
+    , @NamedQuery(name = "Grade.findById", query = "SELECT g FROM Grade g WHERE g.id = :id")
+    , @NamedQuery(name = "Grade.findByDescricao", query = "SELECT g FROM Grade g WHERE g.descricao = :descricao")})
+public class Grade implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
@@ -41,21 +37,19 @@ public class Turma implements Serializable {
     @Column(name = "id")
     private Integer id;
     @Basic(optional = false)
-    @Column(name = "turma")
-    private String turma;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idTurma")
-    private List<Curso> cursoList;
+    @Column(name = "descricao")
+    private String descricao;
 
-    public Turma() {
+    public Grade() {
     }
 
-    public Turma(Integer id) {
+    public Grade(Integer id) {
         this.id = id;
     }
 
-    public Turma(Integer id, String turma) {
+    public Grade(Integer id, String descricao) {
         this.id = id;
-        this.turma = turma;
+        this.descricao = descricao;
     }
 
     public Integer getId() {
@@ -66,21 +60,12 @@ public class Turma implements Serializable {
         this.id = id;
     }
 
-    public String getTurma() {
-        return turma;
+    public String getDescricao() {
+        return descricao;
     }
 
-    public void setTurma(String turma) {
-        this.turma = turma;
-    }
-
-    @XmlTransient
-    public List<Curso> getCursoList() {
-        return cursoList;
-    }
-
-    public void setCursoList(List<Curso> cursoList) {
-        this.cursoList = cursoList;
+    public void setDescricao(String descricao) {
+        this.descricao = descricao;
     }
 
     @Override
@@ -93,10 +78,10 @@ public class Turma implements Serializable {
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof Turma)) {
+        if (!(object instanceof Grade)) {
             return false;
         }
-        Turma other = (Turma) object;
+        Grade other = (Grade) object;
         if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
             return false;
         }
@@ -105,7 +90,7 @@ public class Turma implements Serializable {
 
     @Override
     public String toString() {
-        return "com.curso.entidades.Turma[ id=" + id + " ]";
+        return "com.curso.entity.Grade[ id=" + id + " ]";
     }
     
 }
