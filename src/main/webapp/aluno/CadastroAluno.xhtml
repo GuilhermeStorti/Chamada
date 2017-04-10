@@ -10,46 +10,78 @@
 
     <ui:define name="corpo" >
 
+        <h:form id="navForm">
+            <p:toolbar>
+                <p:toolbarGroup>
+                    <p:button value="Novo" icon="fa fa-fw fa-plus"  outcome="/aluno/CadastroAluno"/>
+                </p:toolbarGroup>
+                <p:toolbarGroup align="right">
+                    <p:button value="Pesquisar" icon="fa fa-fw fa-search"  outcome="/aluno/GerenciarAlunos"/>
+                </p:toolbarGroup>
+            </p:toolbar>
+        </h:form>
+
         <h:form id="form">
-            <p:panelGrid columns="2"  id="painel" style="margin-top: 20px; width:100%;" columnClasses="rotulo, campo">
+            <p:panelGrid columns="2"  id="painel" style="margin-top: 20px; width:100%;"
+                         columnClasses="rotulo, campo" cellpadding="5">
                 <p:outputLabel value="Nome" for="nome"/>
-                <p:inputText value="#{cadastroAlunoBean.aluno.nome}" id="nome" maxlength="50" size="40"/>
+                <p:inputText value="#{cadastroAlunoBean.aluno.nome}" id="nome" maxlength="80"
+                             size="50" required="true"/>
 
                 <p:outputLabel value="Cpf" for="cpf"/>
-                <p:inputMask mask="999.999.999-99" value="#{cadastroAlunoBean.aluno.cpf}" id="cpf"/>
+                <p:inputMask mask="999.999.999-99" value="#{cadastroAlunoBean.aluno.cpf}" id="cpf"
+                             size="15" required="true"/>
 
                 <p:outputLabel value="E-mail" for="email"/>
-                <p:inputText id="email"/>
+                <p:inputText id="email" maxlength="80" size="50" value="#{cadastroAlunoBean.aluno.idContato.email}"
+                             required="true"/>
 
                 <p:outputLabel value="Fone" for="fone"/>
-                <p:inputText id="fone"/>
+                <p:inputMask mask="(99) 9999?-9999" id="fone" size="13" value="#{cadastroAlunoBean.aluno.idContato.fixo}"
+                             required="true"/>
 
                 <p:outputLabel value="Celular" for="celular"/>
-                <p:inputText id="celular"/>
+                <p:inputMask mask="(99) 9999?-9999" id="celular" value="#{cadastroAlunoBean.aluno.idContato.celular}"
+                             required="true"/>
 
                 <p:outputLabel value="CEP" for="cep"/>
-                <p:inputText id="cep"/>
+                <p:inputMask mask="99999-999" id="cep" size="10" value="#{cadastroAlunoBean.aluno.idEndereco.cep}"
+                             required="true"/>
 
                 <p:outputLabel value="Logradouro" for="logradouro"/>
-                <p:inputText id="logradouro"/>
+                <p:inputText id="logradouro" maxlength="80" size="50" value="#{cadastroAlunoBean.aluno.idEndereco.logradouro}"
+                             required="true"/>
 
                 <p:outputLabel value="Bairro" for="bairro"/>
-                <p:inputText id="bairro"/>
+                <p:inputText id="bairro" maxlength="30" size="30" value="#{cadastroAlunoBean.aluno.idEndereco.bairro}"
+                             required="true"/>
 
                 <p:outputLabel value="Cidade" for="cidade"/>
-                <p:inputText id="cidade"/>
+                <p:inputText id="cidade" maxlength="30" size="30" value="#{cadastroAlunoBean.aluno.idEndereco.cidade}"
+                             required="true"/>
 
                 <p:outputLabel value="Estado" for="estado"/>
-                <p:inputText id="estado"/>
+                <p:inputMask mask="aa" id="estado" size="2" value="#{cadastroAlunoBean.aluno.idEndereco.estado}"
+                             required="true"/>
 
                 <p:outputLabel value="Pais" for="pais"/>
-                <p:inputText id="pais"/>
+                <p:inputText id="pais" size="20" maxlength="20" value="#{cadastroAlunoBean.aluno.idEndereco.pais}"
+                             required="true"/>
 
+                <p:outputLabel value="Usuario" for="user"/>
+                <p:inputText id="user" size="20" maxlength="30" value="#{cadastroAlunoBean.aluno.idUsuario.login}"
+                             required="true"/>
+
+                <p:outputLabel value="Senha" for="senha"/>
+                <p:password feedback="true" id="senha" size="20" maxlength="20"
+                            value="#{cadastroAlunoBean.aluno.idUsuario.senha}" required="true"/>
                 <h:column/>
 
                 <h:column>
-                    <p:commandButton value="Limpar" action="#{cadastroAlunoBean.limpar}" icon="fa fa-fw fa-eraser" update="form"/>
-                    <p:commandButton value="Salvar" style="margin-left: 5px;" icon="fa fa-fw fa-save"/>
+                    <p:commandButton value="Limpar" update="form" action="#{cadastroAlunoBean.limpar}"
+                                     icon="fa fa-fw fa-eraser"/>
+                    <p:commandButton value="Salvar" update="form" action="#{cadastroAlunoBean.salvar}"
+                                     style="margin-left: 5px;" icon="fa fa-fw fa-save"/>
                 </h:column>
             </p:panelGrid>
         </h:form>

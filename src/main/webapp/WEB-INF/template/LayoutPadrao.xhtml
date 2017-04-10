@@ -59,14 +59,14 @@
 				<li class="treeview"><a href="#"><i class="fa fa-users"></i>
 					<span>Alunos</span> <i class="fa fa-angle-left pull-right"></i></a>
 					<ul class="treeview-menu">
-						<p:link disabled="#{loginBean.autenticador.usuario.idPerfil.id ne 1}}"
+						<p:link disabled="#{loginBean.autenticador.usuario.idPerfil.id ne 3}"
 								href="#{request.contextPath}/aluno/CadastroAluno.xhtml">
 							<i class="side-menu-icon fa fa-plus"/>Cadastro
 						</p:link>
 						<li/>
-						<p:link disabled="#{loginBean.autenticador.usuario.idPerfil.id ne 1}}"
-								href="#{request.contextPath}/aluno/CadastroAluno.xhtml">
-							<i class="side-menu-icon fa fa-plus"/>Categorias
+						<p:link disabled="#{loginBean.autenticador.usuario.idPerfil.id ne 3}"
+								href="#{request.contextPath}/aluno/GerenciarAlunos.xhtml">
+							<i class="side-menu-icon fa fa-users" style="margin-bottom: 8px; margin-left: 12px;"/>Gerenciar
 						</p:link>
 					</ul>
 				</li>
@@ -95,7 +95,7 @@
 		
 		<!-- Main content -->
 		<section class="content">
-			<p:messages id="messages" autoUpdate="true" closable="true" showDetail="true"/>
+			<p:messages id="messages" autoUpdate="true" closable="true"/>
 			<ui:insert name="corpo" />
 		</section>
 		<!-- Conteudo Principal -->
