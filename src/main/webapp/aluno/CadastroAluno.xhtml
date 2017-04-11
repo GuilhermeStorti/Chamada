@@ -10,7 +10,7 @@
 
     <ui:define name="corpo" >
 
-        <h:form id="navForm">
+        <h:form id="navForm" style="margin-top: 10px;">
             <p:toolbar>
                 <p:toolbarGroup>
                     <p:button value="Novo" icon="fa fa-fw fa-plus"  outcome="/aluno/CadastroAluno"/>
@@ -23,7 +23,7 @@
 
         <h:form id="form">
             <p:panelGrid columns="2"  id="painel" style="margin-top: 20px; width:100%;"
-                         columnClasses="rotulo, campo" cellpadding="5">
+                         columnClasses="rotulo, campo" cellpadding="5" >
                 <p:outputLabel value="Nome" for="nome"/>
                 <p:inputText value="#{cadastroAlunoBean.aluno.nome}" id="nome" maxlength="80"
                              size="50" required="true"/>
@@ -75,6 +75,13 @@
                 <p:outputLabel value="Senha" for="senha"/>
                 <p:password feedback="true" id="senha" size="20" maxlength="20"
                             value="#{cadastroAlunoBean.aluno.idUsuario.senha}" required="true"/>
+
+                <p:outputLabel value="Situação" for="situacao"/>
+                <h:selectOneMenu id="situacao" value="#{cadastroAlunoBean.aluno.status}" style="width:125px">
+                    <f:selectItem itemLabel="Ativo" itemValue="A"/>
+                    <f:selectItem itemLabel="Inativo" itemValue="I"/>
+                </h:selectOneMenu>
+
                 <h:column/>
 
                 <h:column>

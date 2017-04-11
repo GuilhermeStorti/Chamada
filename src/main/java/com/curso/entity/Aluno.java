@@ -30,7 +30,8 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "Aluno.findAll", query = "SELECT a FROM Aluno a")
     , @NamedQuery(name = "Aluno.findById", query = "SELECT a FROM Aluno a WHERE a.id = :id")
     , @NamedQuery(name = "Aluno.findByNome", query = "SELECT a FROM Aluno a WHERE a.nome = :nome")
-    , @NamedQuery(name = "Aluno.findByCpf", query = "SELECT a FROM Aluno a WHERE a.cpf = :cpf")})
+    , @NamedQuery(name = "Aluno.findByCpf", query = "SELECT a FROM Aluno a WHERE a.cpf = :cpf")
+    , @NamedQuery(name = "Aluno.findByStatus", query = "SELECT a FROM Aluno a WHERE a.status = :status")})
 public class Aluno implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -54,6 +55,9 @@ public class Aluno implements Serializable {
     @JoinColumn(name = "id_usuario", referencedColumnName = "id")
     @ManyToOne(optional = false)
     private Usuario idUsuario;
+    @Basic(optional = false)
+    @Column(name = "status")
+    private char status;
 
     public Aluno() {
     }
@@ -62,10 +66,13 @@ public class Aluno implements Serializable {
         this.id = id;
     }
 
-    public Aluno(Integer id, String nome, String cpf) {
-        this.id = id;
+    public Aluno(String nome, String cpf, Contato idContato, Endereco idEndereco, Usuario idUsuario, char status) {
         this.nome = nome;
         this.cpf = cpf;
+        this.idContato = idContato;
+        this.idEndereco = idEndereco;
+        this.idUsuario = idUsuario;
+        this.status = status;
     }
 
     public Integer getId() {
@@ -114,6 +121,14 @@ public class Aluno implements Serializable {
 
     public void setIdUsuario(Usuario idUsuario) {
         this.idUsuario = idUsuario;
+    }
+
+    public char getStatus() {
+        return status;
+    }
+
+    public void setStatus(char status) {
+        this.status = status;
     }
 
     @Override

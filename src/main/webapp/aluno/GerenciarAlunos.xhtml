@@ -10,7 +10,140 @@
 
     <ui:define name="corpo">
 
+    <h:form id="navForm" style="margin-top: 10px;">
+        <p:toolbar>
+            <p:toolbarGroup align="right">
+                <p:button value="Novo" icon="fa fa-fw fa-plus"  outcome="/aluno/CadastroAluno"/>
+            </p:toolbarGroup>
+        </p:toolbar>
+    </h:form>
 
+    <h:form id="formBusca" style="margin-top: 10px;">
+        <p:panelGrid columns="3">
+            <p:outputLabel value="Filtrar por:" for="listar"/>
+            <h:selectOneMenu id="listar" value="#{gerenciarAlunosBean.tipoBusca}">
+                <f:selectItem itemLabel="Todos" itemValue="T" />
+                <f:selectItem itemLabel="Ativo" itemValue="A"/>
+                <f:selectItem itemLabel="Inativo" itemValue="I"/>
+            </h:selectOneMenu>
+            <p:commandButton value="Listar" icon="fa fa-fw fa-search" action="#{gerenciarAlunosBean.carregarLista}" ajax="false" update="mainFormgere"/>
+        </p:panelGrid>
+    </h:form>
+
+    <h:form id="mainForm">
+        <p:dataTable id="alunoTable" value="#{gerenciarAlunosBean.alunos}" var="aluno"
+                     rows="10" paginator="true"
+                     paginatorPosition="bottom"
+                     paginatorAlwaysVisible="false" rowsPerPageTemplate="10,20,30"
+                     emptyMessage="Nenhum registro encontrado." style="margin-top: 10px;">
+
+            <p:column headerText="ID" sortBy="#{aluno.id}" width="6%"
+                      styleClass="center">
+                <h:outputText value="#{aluno.id}"/>
+            </p:column>
+
+            <p:column headerText="Nome" sortBy="#{aluno.nome}" styleClass="center">
+                <h:outputText value="#{aluno.nome}"/>
+            </p:column>
+
+            <p:column headerText="Status" width="15%" styleClass="center">
+                <h:outputText value="#{aluno.status}"/>
+            </p:column>
+
+            <p:column headerText="#" width="110" styleClass="center">
+                <p:commandButton icon="fa fa-fw fa-search" title="Detalhes" ajax="false"
+                    action="#{gerenciarAlunosBean.exibirCd(aluno)}" onclick="PF('cd').show()"/>
+                <p:spacer width="5px;"/>
+                <p:commandButton icon="fa fa-fw fa-pencil" title="Editar" ajax="false"
+                    action="#{gerenciarAlunosBean.editarCd(aluno)}" onclick="PF('cd').show()"/>
+                <p:spacer width="5px;"/>
+            </p:column>
+        </p:dataTable>
+    </h:form>
+
+    <h:form id="formDialog">
+        <p:confirmDialog message="Aluno" header="Aluno" widgetVar="cd" closable="false"
+                         visible="#{gerenciarAlunosBean.exibir}" style="margin-top: -5%">
+            <p:panelGrid columns="2"  id="painel" style="margin-top: 20px; width:100%;"
+                         columnClasses="rotulo, campo" cellpadding="5">
+                <p:outputLabel value="Nome" for="nome"/>
+                <p:inputText value="#{gerenciarAlunosBean.aluno.nome}" id="nome" maxlength="80"
+                             size="50" required="true" disabled="#{!gerenciarAlunosBean.editar}"/>
+
+                <p:outputLabel value="Cpf" for="cpf"/>
+                <p:inputMask mask="999.999.999-99" value="#{gerenciarAlunosBean.aluno.cpf}" id="cpf"
+                             size="15" required="true" disabled="#{!gerenciarAlunosBean.editar}"/>
+
+                <p:outputLabel value="E-mail" for="email"/>
+                <p:inputText id="email" maxlength="80" size="50" value="#{gerenciarAlunosBean.aluno.idContato.email}"
+                             required="true" disabled="#{!gerenciarAlunosBean.editar}"/>
+
+                <p:outputLabel value="Fone" for="fone"/>
+                <p:inputMask mask="(99) 9999?-9999" id="fone" size="13" value="#{gerenciarAlunosBean.aluno.idContato.fixo}"
+                             required="true" disabled="#{!gerenciarAlunosBean.editar}"/>
+
+                <p:outputLabel value="Celular" for="celular"/>
+                <p:inputMask mask="(99) 9999?-9999" id="celular" value="#{gerenciarAlunosBean.aluno.idContato.celular}"
+                             required="true" disabled="#{!gerenciarAlunosBean.editar}"/>
+
+                <p:outputLabel value="CEP" for="cep"/>
+                <p:inputMask mask="99999-999" id="cep" size="10" value="#{gerenciarAlunosBean.aluno.idEndereco.cep}"
+                             required="true" disabled="#{!gerenciarAlunosBean.editar}"/>
+
+                <p:outputLabel value="Logradouro" for="logradouro"/>
+                <p:inputText id="logradouro" maxlength="80" size="50" value="#{gerenciarAlunosBean.aluno.idEndereco.logradouro}"
+                             required="true" disabled="#{!gerenciarAlunosBean.editar}"/>
+
+                <p:outputLabel value="Bairro" for="bairro"/>
+                <p:inputText id="bairro" maxlength="30" size="30" value="#{gerenciarAlunosBean.aluno.idEndereco.bairro}"
+                             required="true" disabled="#{!gerenciarAlunosBean.editar}"/>
+
+                <p:outputLabel value="Cidade" for="cidade"/>
+                <p:inputText id="cidade" maxlength="30" size="30" value="#{gerenciarAlunosBean.aluno.idEndereco.cidade}"
+                             required="true" disabled="#{!gerenciarAlunosBean.editar}"/>
+
+                <p:outputLabel value="Estado" for="estado"/>
+                <p:inputMask mask="aa" id="estado" size="2" value="#{gerenciarAlunosBean.aluno.idEndereco.estado}"
+                             required="true" disabled="#{!gerenciarAlunosBean.editar}"/>
+
+                <p:outputLabel value="Pais" for="pais"/>
+                <p:inputText id="pais" size="20" maxlength="20" value="#{gerenciarAlunosBean.aluno.idEndereco.pais}"
+                             required="true" disabled="#{!gerenciarAlunosBean.editar}"/>
+
+                <p:outputLabel value="Usuario" for="user"/>
+                <p:inputText id="user" size="20" maxlength="30" value="#{gerenciarAlunosBean.aluno.idUsuario.login}"
+                             required="true" disabled="#{!gerenciarAlunosBean.editar}"/>
+
+                <p:outputLabel value="Senha" for="senha"/>
+                <p:password feedback="true" id="senha" size="20" maxlength="20"
+                            value="#{gerenciarAlunosBean.aluno.idUsuario.senha}" required="true"
+                            disabled="#{!gerenciarAlunosBean.editar}"/>
+
+                <p:outputLabel value="Situação" for="situacao"/>
+                <h:selectOneMenu id="situacao" value="#{gerenciarAlunosBean.aluno.status}" style="width:125px"
+                                 rendered="#{gerenciarAlunosBean.editar}">
+                    <f:selectItem itemLabel="Ativo" itemValue="A"/>
+                    <f:selectItem itemLabel="Inativo" itemValue="I"/>
+                </h:selectOneMenu>
+                <p:inputText size="2" value="#{gerenciarAlunosBean.aluno.status}"
+                             rendered="#{!gerenciarAlunosBean.editar}"
+                             disabled="true"/>
+
+                <h:column/>
+
+                <h:column>
+                    <p:commandButton value="Voltar" action="#{gerenciarAlunosBean.fecharCd}"
+                                     icon="fa fa-fw fa-mail-reply"
+                                     onclick="PF('cd').close()"/>
+
+                    <p:commandButton value="Salvar" action="#{gerenciarAlunosBean.salvar}"
+                                     style="margin-left: 5px;" icon="fa fa-fw fa-save"
+                                     onclick="PF('cd').close()"
+                                     rendered="#{gerenciarAlunosBean.editar}"/>
+                </h:column>
+            </p:panelGrid>
+        </p:confirmDialog>
+    </h:form>
 
     </ui:define>
 </ui:composition>
