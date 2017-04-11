@@ -7,8 +7,10 @@
 <h:head>
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 	<title><ui:insert name="titulo">Chamada</ui:insert></title>
+	<link rel="shortcut icon" href="/resources/img/icon.png" />
 	<link rel="stylesheet" type="text/css"
 		href="#{request.contextPath}/resources/bootstrap/css/bootstrap.min.css" />
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/ionicons/2.0.1/css/ionicons.min.css"/>
 	<link rel="stylesheet" type="text/css"
 		href="#{request.contextPath}/resources/dist/css/AdminLTE.min.css" />
 	<link rel="stylesheet" type="text/css"
@@ -23,7 +25,7 @@
 		  rel='stylesheet' type='text/css' />
 </h:head>
 
-<h:body class="hold-transition skin-blue sidebar-mini">
+<h:body class="hold-transition skin-blue sidebar-mini" style="background-color: #222d32 !important;">
 
 	<!-- Main Header -->
 	<header class="main-header">
@@ -40,16 +42,18 @@
 			<a href="#" class="sidebar-toggle" data-toggle="offcanvas"
 				role="button"> <span class="sr-only">Toggle navigation</span>
 			</a>
-			<h:form id="logoutForm" style="float: right; position: relative; margin-top: 10px; margin-right: 10px;">
-				<p:outputLabel value="#{loginBean.usuario.login}" style="color: #d9edf7; margin-right: 10px"/>
-				<p:commandButton action="#{loginBean.logout()}" icon="fa fa-sign-out" title="Sair"/>
+			<h:form id="logoutForm" styleClass="logout-form">
+				<p:commandLink action="#{loginBean.logout}" title="Sair">
+					<p:outputLabel styleClass="fa fa-sign-out" style="color: #ffffff; margin-right: 10px"/>
+				</p:commandLink>
+				<p:outputLabel value="#{loginBean.usuario.login}" style="color: #ffffff"/>
 			</h:form>
 		</nav>
 
 	</header>
 
 	<!-- Left side column. contains the logo and sidebar -->
-	<aside class="main-sidebar menu-lateral">
+	<aside class="main-sidebar">
 
 		<!-- sidebar: style can be found in sidebar.less -->
 		<section class="sidebar">
@@ -95,29 +99,24 @@
 		
 		<!-- Main content -->
 		<section class="content">
+
 			<p:messages id="messages" autoUpdate="true" closable="true"/>
+
 			<ui:insert name="corpo" />
+
 		</section>
 		<!-- Conteudo Principal -->
 	</div>
-	<!-- /.content-wrapper -->
 
-	<!-- Footer -->
 	<footer class="main-footer">
-		<!-- To the right -->
-		<div class="pull-right hidden-xs">Unitri 2016 - Sistemas de informação</div>
-		<!-- Default to the left -->
-		<strong>Copyright 2016</strong> All rights reserved.
+		<div class="pull-right hidden-xs">Unitri 2017 - Sistemas de informação</div>
+		<strong>Copyright 2017</strong> All rights reserved.
 	</footer>
-
-	<p:separator style="martin-top: 20px" />
 
 	<script type="text/javascript"
 		src="#{request.contextPath}/resources/bootstrap/js/bootstrap.min.js"></script>
-	<!-- Correio -->
 	<script type="text/javascript"
 		src="#{request.contextPath}/resources/dist/js/app.min.js"></script>
-	<!-- Correio -->
 
 </h:body>
 </html>

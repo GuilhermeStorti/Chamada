@@ -9,10 +9,6 @@
 	margin-right: 5%;
 }
 
-.menu-lateral {
-	height:auto !important;
-}
-
 .login-topbar{
 	width: 100%;
 	height: 50px;
@@ -59,4 +55,13 @@
 	margin-left: 14px;
 	margin-top: 7px;
 	margin-right: 14px;
+}
+
+.logout-form{
+	float: right;
+	position: relative;
+	margin-right: 14px;
+	height: 7px;
+	margin-top: 11px;
+	font-size: 1.2em;
 }
