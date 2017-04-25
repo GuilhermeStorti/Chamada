@@ -1,75 +1,57 @@
 package com.curso.beans;
 
+import com.curso.utils.ArquivoUtil;
+import org.primefaces.model.UploadedFile;
+
+import javax.annotation.PostConstruct;
+import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
+import javax.faces.context.FacesContext;
+import java.io.File;
+import java.io.IOException;
+import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
 @ViewScoped
 @ManagedBean(name = "homeBean")
-public class HomeBean {
+public class HomeBean implements Serializable{
 
-    public HomeBean() {
-    }
+    private static final long serialVersionUID = 1L;
 
-    /*
-    private LineChartModel areaModel;
-    private Graficos graficoCategoria;
-    private List<Graficos> listCategoria;
+    private List<File> arquivos = new ArrayList<>();
+
+    private UploadedFile uploadedFile;
 
     @PostConstruct
-    public void init() {
-        listCategoria = new ArrayList<>();
-        buscarGraficoCategoria();
-        createAreaModel();
+    public void postConstruct() {
+        arquivos = new ArrayList<>(ArquivoUtil.listar());
     }
 
-    private void buscarGraficoCategoria(){
-        EntityManager manager = JpaUtil.getManager();
-        String queryString = "SELECT c.descricao, count(v.idCategoria) from Veiculo v, Categoria c WHERE v.idCategoria = c.idCategoria GROUP BY v.idCategoria";
-        Query query = manager.createNativeQuery(queryString);
+    public void upload() {
         try {
-            List<Object[]> result = query.getResultList();
-            for(Object[] row : result){
-                graficoCategoria = new Graficos();
-                graficoCategoria.setDescricao(row[0].toString());
-                graficoCategoria.setQuantidade(Integer.parseInt(row[1].toString()));
-                listCategoria.add(graficoCategoria);
-            }
-        }catch (Exception ex){
-            System.out.println("teste");
-        }finally {
-            JpaUtil.closeManager(manager);
+            File arquivo = ArquivoUtil.escrever(uploadedFile.getFileName(), uploadedFile.getContents());
+
+            arquivos.add(arquivo);
+
+            FacesContext.getCurrentInstance().addMessage(null,
+                    new FacesMessage("Upload completo", "O arquivo " + arquivo.getName() + " foi salvo!"));
+        } catch (IOException e) {
+            FacesContext.getCurrentInstance().addMessage(null,
+                    new FacesMessage(FacesMessage.SEVERITY_WARN, "Erro", e.getMessage()));
         }
     }
 
-    public LineChartModel getAreaModel() {
-        return areaModel;
+    public List<File> getArquivos() {
+        return arquivos;
     }
 
-    private void createAreaModel() {
-        areaModel = new LineChartModel();
-
-        LineChartSeries categoria = new LineChartSeries();
-        categoria.setFill(true);
-        categoria.setLabel("Categoria");
-
-        for(Graficos grafico : listCategoria){
-            categoria.set(grafico.getDescricao(), grafico.getQuantidade());
-        }
-
-        areaModel.addSeries(categoria);
-
-        areaModel.setTitle("Quantidade de veiculos");
-        areaModel.setLegendPosition("ne");
-        areaModel.setStacked(true);
-        areaModel.setShowPointLabels(true);
-
-        Axis xAxis = new CategoryAxis("Categoria");
-        areaModel.getAxes().put(AxisType.X, xAxis);
-        Axis yAxis = areaModel.getAxis(AxisType.Y);
-        yAxis.setLabel("Quantidade");
-        yAxis.setMin(0);
-        yAxis.setMax(10);
+    public UploadedFile getUploadedFile() {
+        return uploadedFile;
     }
-*/
 
+    public void setUploadedFile(UploadedFile uploadedFile) {
+        this.uploadedFile = uploadedFile;
+    }
 }

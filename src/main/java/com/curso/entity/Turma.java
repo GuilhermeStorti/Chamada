@@ -45,6 +45,8 @@ public class Turma implements Serializable {
     private String turma;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "idTurma")
     private List<Curso> cursoList;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idTurma")
+    private List<Arquivo> arquivoList;
 
     public Turma() {
     }
@@ -81,6 +83,15 @@ public class Turma implements Serializable {
 
     public void setCursoList(List<Curso> cursoList) {
         this.cursoList = cursoList;
+    }
+
+    @XmlTransient
+    public List<Arquivo> getArquivoList() {
+        return arquivoList;
+    }
+
+    public void setArquivoList(List<Arquivo> arquivoList) {
+        this.arquivoList = arquivoList;
     }
 
     @Override

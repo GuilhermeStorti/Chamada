@@ -53,6 +53,8 @@ public class Usuario implements Serializable {
     private List<Aluno> alunoList;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "idUsuario")
     private List<Professor> professorList;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idUsuarioUpload")
+    private List<Arquivo> arquivoList;
     @JoinColumn(name = "id_perfil", referencedColumnName = "id")
     @ManyToOne(optional = false)
     private Perfil idPerfil;
@@ -110,6 +112,15 @@ public class Usuario implements Serializable {
 
     public void setProfessorList(List<Professor> professorList) {
         this.professorList = professorList;
+    }
+
+    @XmlTransient
+    public List<Arquivo> getArquivoList() {
+        return arquivoList;
+    }
+
+    public void setArquivoList(List<Arquivo> arquivoList) {
+        this.arquivoList = arquivoList;
     }
 
     public Perfil getIdPerfil() {

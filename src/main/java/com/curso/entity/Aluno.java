@@ -46,6 +46,9 @@ public class Aluno implements Serializable {
     @Basic(optional = false)
     @Column(name = "cpf")
     private String cpf;
+    @Basic(optional = false)
+    @Column(name = "status")
+    private Character status;
     @JoinColumn(name = "id_contato", referencedColumnName = "id")
     @ManyToOne(optional = false)
     private Contato idContato;
@@ -55,9 +58,6 @@ public class Aluno implements Serializable {
     @JoinColumn(name = "id_usuario", referencedColumnName = "id")
     @ManyToOne(optional = false)
     private Usuario idUsuario;
-    @Basic(optional = false)
-    @Column(name = "status")
-    private char status;
 
     public Aluno() {
     }
@@ -66,12 +66,10 @@ public class Aluno implements Serializable {
         this.id = id;
     }
 
-    public Aluno(String nome, String cpf, Contato idContato, Endereco idEndereco, Usuario idUsuario, char status) {
+    public Aluno(Integer id, String nome, String cpf, Character status) {
+        this.id = id;
         this.nome = nome;
         this.cpf = cpf;
-        this.idContato = idContato;
-        this.idEndereco = idEndereco;
-        this.idUsuario = idUsuario;
         this.status = status;
     }
 
@@ -99,6 +97,14 @@ public class Aluno implements Serializable {
         this.cpf = cpf;
     }
 
+    public Character getStatus() {
+        return status;
+    }
+
+    public void setStatus(Character status) {
+        this.status = status;
+    }
+
     public Contato getIdContato() {
         return idContato;
     }
@@ -121,14 +127,6 @@ public class Aluno implements Serializable {
 
     public void setIdUsuario(Usuario idUsuario) {
         this.idUsuario = idUsuario;
-    }
-
-    public char getStatus() {
-        return status;
-    }
-
-    public void setStatus(char status) {
-        this.status = status;
     }
 
     @Override
