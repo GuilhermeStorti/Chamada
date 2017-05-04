@@ -1,0 +1,80 @@
+<ui:composition template="../WEB-INF/template/LayoutPadrao.xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui">
+
+    <ui:define name="titulo">Cadastro de Grade</ui:define>
+
+    <ui:define name="tituloConteudo"><h1>Cadastro de Turma</h1></ui:define>
+
+    <ui:define name="corpo" >
+
+        <h:form id="navForm" style="margin-top: 10px;">
+            <p:toolbar>
+                <p:toolbarGroup>
+                    <p:button value="Novo" icon="fa fa-fw fa-plus" outcome="/grade/CadastroGrade"/>
+                </p:toolbarGroup>
+                <p:toolbarGroup align="right">
+                    <p:button value="Pesquisar" icon="fa fa-fw fa-search"  outcome="/grade/GerenciarGrades"/>
+                </p:toolbarGroup>
+            </p:toolbar>
+        </h:form>
+
+        <h:form id="form">
+                <p:panelGrid columns="2" id="painel" style="margin-top: 20px; width:100%;" columnClasses="rotulo, campo"  >
+                <h:column>
+                    <p:outputLabel value="Curso"/>
+                    <h:selectOneMenu id="curso" style="width:125px">
+                    </h:selectOneMenu>
+                </h:column>
+                <h:column>
+                    <p:outputLabel value="Nome" for="nome"/>
+                    <p:inputText  id="nome" maxlength="80" size="50" required="true"/>
+                </h:column>
+                <h:column>
+                    <p:outputLabel value="Materias"/>
+                    <h:selectOneMenu id="materia"  style="width:125px"></h:selectOneMenu>
+                </h:column>
+
+                <h:column>
+                    <p:commandButton value="Limpar" update="form" 
+                                     icon="fa fa-fw fa-eraser"/>
+                    <p:commandButton value="Adicionar" update="form" 
+                                     style="margin-left: 5px;" icon="fa fa-fw fa-save"/>
+                </h:column>
+            </p:panelGrid>
+        </h:form>
+            <h:form id="mainForm">
+        <p:dataTable id="addmateriasTable"  var="materias"
+                     rows="10" paginator="true"
+                     paginatorPosition="bottom"
+                     paginatorAlwaysVisible="false" rowsPerPageTemplate="10,20,30"
+                     emptyMessage="Nenhum registro encontrado." style="margin-top: 10px;">
+
+            <p:column headerText="ID" width="6%"
+                      styleClass="center">
+                <h:outputText/>
+            </p:column>
+
+            <p:column headerText="Nome"  styleClass="center">
+                <h:outputText />
+            </p:column>
+
+            <p:column headerText="Turno" width="15%" styleClass="center">
+                <h:outputText/>
+            </p:column>
+
+            <p:column headerText="Horario" width="110" styleClass="center">
+                <h:outputText/>
+            </p:column>
+        </p:dataTable>
+            <h:column>
+                <p:commandButton value="Limpar" update="form" 
+                                     icon="fa fa-fw fa-eraser"/>
+                <p:commandButton value="Salvar Grade" update="form" 
+                                     style="margin-left: 5px;" icon="fa fa-fw fa-save"/>
+            </h:column>
+    </h:form>
+    </ui:define>
+</ui:composition>

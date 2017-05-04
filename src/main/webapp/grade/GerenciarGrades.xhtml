@@ -1,0 +1,50 @@
+<ui:composition template="../WEB-INF/template/LayoutPadrao.xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui">
+
+    <ui:define name="titulo">Gerenciar Grades</ui:define>
+
+    <ui:define name="tituloConteudo"><h1>Gerenciar Grades</h1></ui:define>
+
+    <ui:define name="corpo">
+
+    <h:form id="navForm" style="margin-top: 10px;">
+        <p:toolbar>
+            <p:toolbarGroup align="right">
+                <p:button value="Novo" icon="fa fa-fw fa-plus"  outcome="/grade/CadastroGrade"/>
+            </p:toolbarGroup>
+        </p:toolbar>
+    </h:form>
+
+    <h:form id="formBusca" style="margin-top: 10px;">
+        <p:panelGrid columns="3">
+            <p:outputLabel value="Filtrar por:" for="listar"/>
+            <h:selectOneMenu id="listar" >
+                <f:selectItem itemLabel="Grade1" />
+            </h:selectOneMenu>
+            <p:commandButton value="Listar" icon="fa fa-fw fa-search" ajax="false" update="mainFormgere"/>
+        </p:panelGrid>
+    </h:form>
+
+    <h:form id="mainForm">
+        <p:dataTable id="gradeTable"  var="aluno"
+                     rows="10" paginator="true"
+                     paginatorPosition="bottom"
+                     paginatorAlwaysVisible="false" rowsPerPageTemplate="10,20,30"
+                     emptyMessage="Nenhum registro encontrado." style="margin-top: 10px;">
+
+            <p:column headerText="ID"  width="6%"
+                      styleClass="center">
+                <h:outputText />
+            </p:column>
+
+            <p:column headerText="Materia"  styleClass="center">
+                <h:outputText />
+            </p:column>
+
+        </p:dataTable>
+    </h:form>
+    </ui:define>
+</ui:composition>

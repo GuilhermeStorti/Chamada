@@ -1,0 +1,135 @@
+<ui:composition template="../WEB-INF/template/LayoutPadrao.xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui">
+
+    <ui:define name="titulo">Gerenciar Professores</ui:define>
+
+    <ui:define name="tituloConteudo"><h1>Gerenciar Professores</h1></ui:define>
+
+    <ui:define name="corpo">
+
+    <h:form id="navForm" style="margin-top: 10px;">
+        <p:toolbar>
+            <p:toolbarGroup align="right">
+                <p:button value="Novo" icon="fa fa-fw fa-plus"  outcome="/professor/CadastroProfessor"/>
+            </p:toolbarGroup>
+        </p:toolbar>
+    </h:form>
+
+    <h:form id="formBusca" style="margin-top: 10px;">
+        <p:panelGrid columns="3">
+            <p:outputLabel value="Filtrar por:" for="listar"/>
+            <h:selectOneMenu id="listar" value="#{gerenciarProfessorBean.tipoBusca}">
+                <f:selectItem itemLabel="Todos" itemValue="T" />
+                <f:selectItem itemLabel="Ativo" itemValue="A"/>
+                <f:selectItem itemLabel="Inativo" itemValue="I"/>
+            </h:selectOneMenu>
+            <p:commandButton value="Listar" icon="fa fa-fw fa-search" action="#{gerenciarProfessorBean.carregarLista}" ajax="false" update="mainFormgere"/>
+        </p:panelGrid>
+    </h:form>
+
+    <h:form id="mainForm">
+        <p:dataTable id="alunoTable" value="#{gerenciarProfessorBean.professores}" var="aluno"
+                     rows="10" paginator="true"
+                     paginatorPosition="bottom"
+                     paginatorAlwaysVisible="false" rowsPerPageTemplate="10,20,30"
+                     emptyMessage="Nenhum registro encontrado." style="margin-top: 10px;">
+
+            <p:column headerText="ID" sortBy="#{professor.id}" width="6%"
+                      styleClass="center">
+                <h:outputText value="#{professor.id}"/>
+            </p:column>
+
+            <p:column headerText="Nome" sortBy="#{professor.nome}" styleClass="center">
+                <h:outputText value="#{professor.nome}"/>
+            </p:column>
+
+            <p:column headerText="#" width="110" styleClass="center">
+                <p:commandButton icon="fa fa-fw fa-search" title="Detalhes" ajax="false"
+                    action="#{gerenciarProfessorBean.exibirCd(professor)}" onclick="PF('cd').show()"/>
+                <p:spacer width="5px;"/>
+                <p:commandButton icon="fa fa-fw fa-pencil" title="Editar" ajax="false"
+                    action="#{gerenciarProfessorBean.editarCd(professor)}" onclick="PF('cd').show()"/>
+                <p:spacer width="5px;"/>
+            </p:column>
+        </p:dataTable>
+    </h:form>
+
+    <h:form id="formDialog">
+        <p:confirmDialog message="Aluno" header="Aluno" widgetVar="cd" closable="false"
+                         visible="#{gerenciarProfessorBean.exibir}" style="margin-top: -5%">
+            <p:panelGrid columns="2"  id="painel" style="margin-top: 20px; width:100%;"
+                         columnClasses="rotulo, campo" >
+                <p:outputLabel value="Nome" for="nome"/>
+                <p:inputText value="#{gerenciarProfessorBean.professor.nome}" id="nome" maxlength="80"
+                             size="50" required="true" disabled="#{!gerenciarProfessorBean.editar}"/>
+
+                <p:outputLabel value="Cpf" for="cpf"/>
+                <p:inputMask mask="999.999.999-99" value="#{gerenciarProfessorBean.professor.cpf}" id="cpf"
+                             size="15" required="true" disabled="#{!gerenciarAlunosBean.editar}"/>
+
+                <p:outputLabel value="E-mail" for="email"/>
+                <p:inputText id="email" maxlength="80" size="50" value="#{gerenciarProfessorBean.professor.idContato.email}"
+                             required="true" disabled="#{!gerenciarProfessorBean.editar}"/>
+
+                <p:outputLabel value="Fone" for="fone"/>
+                <p:inputMask mask="(99) 9999?-9999" id="fone" size="13" value="#{gerenciarProfessorBean.professor.idContato.fixo}"
+                             required="true" disabled="#{!gerenciarProfessorBean.editar}"/>
+
+                <p:outputLabel value="Celular" for="celular"/>
+                <p:inputMask mask="(99) 9999?-9999" id="celular" value="#{gerenciarProfessorBean.professor.idContato.celular}"
+                             required="true" disabled="#{!gerenciarProfessorBean.editar}"/>
+
+                <p:outputLabel value="CEP" for="cep"/>
+                <p:inputMask mask="99999-999" id="cep" size="10" value="#{gerenciarProfessorBean.professor.idEndereco.cep}"
+                             required="true" disabled="#{!gerenciarProfessorBean.editar}"/>
+
+                <p:outputLabel value="Logradouro" for="logradouro"/>
+                <p:inputText id="logradouro" maxlength="80" size="50" value="#{gerenciarProfessorBean.professor.idEndereco.logradouro}"
+                             required="true" disabled="#{!gerenciarProfessorBean.editar}"/>
+
+                <p:outputLabel value="Bairro" for="bairro"/>
+                <p:inputText id="bairro" maxlength="30" size="30" value="#{gerenciarProfessorBean.professor.idEndereco.bairro}"
+                             required="true" disabled="#{!gerenciarProfessorBean.editar}"/>
+
+                <p:outputLabel value="Cidade" for="cidade"/>
+                <p:inputText id="cidade" maxlength="30" size="30" value="#{gerenciarProfessorBean.professor.idEndereco.cidade}"
+                             required="true" disabled="#{!gerenciarProfessorBean.editar}"/>
+
+                <p:outputLabel value="Estado" for="estado"/>
+                <p:inputMask mask="aa" id="estado" size="2" value="#{gerenciarProfessorBean.professor.idEndereco.estado}"
+                             required="true" disabled="#{!gerenciarProfessorBean.editar}"/>
+
+                <p:outputLabel value="Pais" for="pais"/>
+                <p:inputText id="pais" size="20" maxlength="20" value="#{gerenciarProfessorBean.professor.idEndereco.pais}"
+                             required="true" disabled="#{!gerenciarProfessorBean.editar}"/>
+
+                <p:outputLabel value="Usuario" for="user"/>
+                <p:inputText id="user" size="20" maxlength="30" value="#{gerenciarProfessorBean.professor.idUsuario.login}"
+                             required="true" disabled="#{!gerenciarProfessorBean.editar}"/>
+
+                <p:outputLabel value="Senha" for="senha"/>
+                <p:password feedback="true" id="senha" size="20" maxlength="20"
+                            value="#{gerenciarProfessorBean.professor.idUsuario.senha}" required="true"
+                            disabled="#{!gerenciarProfessorBean.editar}"/>
+         
+                <h:column/>
+
+                <h:column>
+                    <p:commandButton value="Voltar" action="#{gerenciarProfessorBean.fecharCd}"
+                                     icon="fa fa-fw fa-mail-reply"
+                                     onclick="PF('cd').close()"/>
+
+                    <p:commandButton value="Salvar" action="#{gerenciarProfessorBean.salvar}"
+                                     style="margin-left: 5px;" icon="fa fa-fw fa-save"
+                                     onclick="PF('cd').close()"
+                                     rendered="#{gerenciarProfessorBean.editar}"/>
+                </h:column>
+            </p:panelGrid>
+        </p:confirmDialog>
+    </h:form>
+
+    </ui:define>
+</ui:composition>

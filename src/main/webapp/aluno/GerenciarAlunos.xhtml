@@ -65,7 +65,7 @@
         <p:confirmDialog message="Aluno" header="Aluno" widgetVar="cd" closable="false"
                          visible="#{gerenciarAlunosBean.exibir}" style="margin-top: -5%">
             <p:panelGrid columns="2"  id="painel" style="margin-top: 20px; width:100%;"
-                         columnClasses="rotulo, campo" cellpadding="5">
+                         columnClasses="rotulo, campo">
                 <p:outputLabel value="Nome" for="nome"/>
                 <p:inputText value="#{gerenciarAlunosBean.aluno.nome}" id="nome" maxlength="80"
                              size="50" required="true" disabled="#{!gerenciarAlunosBean.editar}"/>

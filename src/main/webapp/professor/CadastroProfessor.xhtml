@@ -1,0 +1,89 @@
+<ui:composition template="../WEB-INF/template/LayoutPadrao.xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui">
+
+    <ui:define name="titulo">Cadastro de Professor</ui:define>
+
+    <ui:define name="tituloConteudo"><h1>Cadastro de Professor</h1></ui:define>
+
+    <ui:define name="corpo" >
+
+        <h:form id="navForm" style="margin-top: 10px;">
+            <p:toolbar>
+                <p:toolbarGroup>
+                    <p:button value="Novo" icon="fa fa-fw fa-plus"  outcome="/professor/CadastroProfessor"/>
+                </p:toolbarGroup>
+                <p:toolbarGroup align="right">
+                    <p:button value="Pesquisar" icon="fa fa-fw fa-search"  outcome="/professor/GerenciarProfessores"/>
+                </p:toolbarGroup>
+            </p:toolbar>
+        </h:form>
+
+        <h:form id="form">
+            <p:panelGrid columns="2"  id="painel" style="margin-top: 20px; width:100%;"
+                         columnClasses="rotulo, campo" >
+                <p:outputLabel value="Nome" for="nome"/>
+                <p:inputText value="#{cadastroProfessorBean.professor.nome}" id="nome" maxlength="80"
+                             size="50" required="true"/>
+
+                <p:outputLabel value="Cpf" for="cpf"/>
+                <p:inputMask mask="999.999.999-99" value="#{cadastroProfessorBean.professor.cpf}" id="cpf"
+                             size="15" required="true"/>
+
+                <p:outputLabel value="E-mail" for="email"/>
+                <p:inputText id="email" maxlength="80" size="50" value="#{cadastroProfessorBean.professor.idContato.email}"
+                             required="true"/>
+
+                <p:outputLabel value="Fone" for="fone"/>
+                <p:inputMask mask="(99) 9999?-9999" id="fone" size="13" value="#{cadastroProfessorBean.professor.idContato.fixo}"
+                             required="true"/>
+
+                <p:outputLabel value="Celular" for="celular"/>
+                <p:inputMask mask="(99) 9999?-9999" id="celular" value="#{cadastroProfessorBean.professor.idContato.celular}"
+                             required="true"/>
+
+                <p:outputLabel value="CEP" for="cep"/>
+                <p:inputMask mask="99999-999" id="cep" size="10" value="#{cadastroProfessorBean.professor.idEndereco.cep}"
+                             required="true"/>
+
+                <p:outputLabel value="Logradouro" for="logradouro"/>
+                <p:inputText id="logradouro" maxlength="80" size="50" value="#{cadastroProfessorBean.professor.idEndereco.logradouro}"
+                             required="true"/>
+
+                <p:outputLabel value="Bairro" for="bairro"/>
+                <p:inputText id="bairro" maxlength="30" size="30" value="#{cadastroProfessorBean.professor.idEndereco.bairro}"
+                             required="true"/>
+
+                <p:outputLabel value="Cidade" for="cidade"/>
+                <p:inputText id="cidade" maxlength="30" size="30" value="#{cadastroProfessorBean.professor.idEndereco.cidade}"
+                             required="true"/>
+
+                <p:outputLabel value="Estado" for="estado"/>
+                <p:inputMask mask="aa" id="estado" size="2" value="#{cadastroProfessorBean.professor.idEndereco.estado}"
+                             required="true"/>
+
+                <p:outputLabel value="Pais" for="pais"/>
+                <p:inputText id="pais" size="20" maxlength="20" value="#{cadastroProfessorBean.professor.idEndereco.pais}"
+                             required="true"/>
+
+                <p:outputLabel value="Usuario" for="user"/>
+                <p:inputText id="user" size="20" maxlength="30" value="#{cadastroProfessorBean.professor.idUsuario.login}"
+                             required="true"/>
+
+                <p:outputLabel value="Senha" for="senha"/>
+                <p:password feedback="true" id="senha" size="20" maxlength="20"
+                            value="#{cadastroProfessorBean.professor.idUsuario.senha}" required="true"/>
+                <h:column/>
+
+                <h:column>
+                    <p:commandButton value="Limpar" update="form" action="#{cadastroProfessorBean.limpar}"
+                                     icon="fa fa-fw fa-eraser"/>
+                    <p:commandButton value="Salvar" update="form" action="#{cadastroProfessorBean.salvar}"
+                                     style="margin-left: 5px;" icon="fa fa-fw fa-save"/>
+                </h:column>
+            </p:panelGrid>
+        </h:form>
+    </ui:define>
+</ui:composition>
