@@ -15,25 +15,27 @@
 
         <h:form enctype="multipart/form-data">
             <h:panelGrid columns="2">
-                <p:outputLabel value="Arquivo: " for="fileUpload" />
                 <p:fileUpload value="#{homeBean.uploadedFile}"
-                              id="fileUpload" mode="simple" skinSimple="true" />
-
-                <h:outputText />
-                <p:commandButton value="Enviar" ajax="false"
-                                 actionListener="#{homeBean.upload}" />
+                              id="fileUpload" mode="simple" skinSimple="true" label="Selecionar"/>
+                <p:column />
+                <p:commandButton value="Carregar" ajax="false" style="margin-top: 10px;"
+                                 actionListener="#{homeBean.upload}" icon="fa fa-upload"/>
             </h:panelGrid>
 
             <p:spacer height="20px" />
 
-            <p:dataTable value="#{homeBean.arquivos}" var="file">
+            <p:dataTable value="#{homeBean.arquivos}" var="file"
+                         rows="10" paginator="true"
+                         paginatorPosition="bottom"
+                         paginatorAlwaysVisible="false" rowsPerPageTemplate="10,20,30"
+                         emptyMessage="Nenhum arquivo encontrado.">
                 <f:facet name="header">
                     Arquivos
                 </f:facet>
                 <p:column width="200">
                     <p:commandButton value="Baixar" ajax="false"
                                      actionListener="#{descarregadorBean.descarregar(file)}"
-                                     icon="ui-icon-arrowthick-1-s">
+                                     icon="fa fa-download">
                         <p:fileDownload value="#{descarregadorBean.streamedContent}" />
                     </p:commandButton>
                 </p:column>
