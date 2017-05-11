@@ -11,7 +11,38 @@
     
     <ui:define name="corpo">
 
-        <ui:include src="/dashboard/dashboard.xhtml" />
+        <!--<ui:include src="/dashboard/dashboard.xhtml" />-->
+
+        <h:form enctype="multipart/form-data">
+            <h:panelGrid columns="2">
+                <p:outputLabel value="Arquivo: " for="fileUpload" />
+                <p:fileUpload value="#{homeBean.uploadedFile}"
+                              id="fileUpload" mode="simple" skinSimple="true" />
+
+                <h:outputText />
+                <p:commandButton value="Enviar" ajax="false"
+                                 actionListener="#{homeBean.upload}" />
+            </h:panelGrid>
+
+            <p:spacer height="20px" />
+
+            <p:dataTable value="#{homeBean.arquivos}" var="file">
+                <f:facet name="header">
+                    Arquivos
+                </f:facet>
+                <p:column width="200">
+                    <p:commandButton value="Baixar" ajax="false"
+                                     actionListener="#{descarregadorBean.descarregar(file)}"
+                                     icon="ui-icon-arrowthick-1-s">
+                        <p:fileDownload value="#{descarregadorBean.streamedContent}" />
+                    </p:commandButton>
+                </p:column>
+
+                <p:column headerText="Nome">
+                    <h:outputText value="#{file.name}" />
+                </p:column>
+            </p:dataTable>
+        </h:form>
 
     </ui:define>
     
